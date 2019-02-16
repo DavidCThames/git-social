@@ -1,14 +1,23 @@
 from django.http import JsonResponse
 from github import Github
 
+
 g = Github('ebd026d4736c985826055cc7b1d8a5db1c6f26b3')
+
+def get_contributors_from_list(contributors, username):
+    for contributor in contributors:
+        if contributor.author.login == username:
+            return contributor, False
+    return None, True
+
+    
 
 def contributor_to_dict(contributor):
     d = {}
     d['username'] = contributor.author.login
     d['name'] = contributor.author.name
     d['total'] = contributor.total
-    last_week = contributor.weeks[0]
+    last_week = contributor.weeks(len(contributor.weeks)-1)
     d['last_week'] = { # TODO: Might be first week...
         
         'additions': last_week.a,
@@ -21,13 +30,12 @@ def get_lines_week(request, owner, repo, username):
     repo = g.get_repo(owner + '/' + repo)
     stats = repo.get_stats_contributors()
     json = {'success' : True}
-    for contributor in stats:
-        if contributor.author.login == username:
+    contributor, fail = get_contributor_in_list(stats, username)
+    if not fail:
             data = contributor_to_dict(contributor)
             json['lines'] = data['last_week']['additions'] + data['last_week']['deletes']
             json['additions'] = data['last_week']['additions']
             json['deletes'] = data['last_week']['deletes']
-            break
     else:
         json['success'] = False
         json['error']  = 'username not found'
@@ -39,10 +47,9 @@ def get_commits_week(request, owner, repo, username):
     repo = g.get_repo(owner + '/' + repo)
     stats = repo.get_stats_contributors()
     json = {'success' : True}
-    for contributor in stats:
-        if contributor.author.login == username:
+    contributor, fail = get_contributor_in_list(stats, username)
+    if not fail:
             json['commits'] = contributor_to_dict(contributor)['last_week']['commits']
-            break
     else:
         json['success'] = False
         json['error']  = 'username not found'

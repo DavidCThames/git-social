@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% load widget_tweaks %}
+{% block content %}
+    <div class="row">
+	{% for error in field.errors %}
+            <span class="help-block">{{ error }}</span>
+	{% endfor %}
+    </div>
+    <form class="col s12" method="POST">
+	      {% csrf_token %}
+      <div class="row">
+        <div class="input-field col s6">
+	    {% render_field form.username class+="validate" %}
+            <label for="username">Username</label>
+	    {{form.username.errors}}	    
+        </div>
+        <div class="input-field col s6">
+	    {% render_field form.password class+="validate" %}
+            <label for="email">Password</label>
+
+        </div>
+      </div>
+      <button class="btn waves-effect waves-light" type="submit" name="action">Submit
+      </button>
+    </form>
+  </div>
+    
+{% endblock %}

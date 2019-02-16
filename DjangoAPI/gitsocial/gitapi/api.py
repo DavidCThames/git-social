@@ -30,7 +30,7 @@ def get_lines_week(request, owner, repo, username):
     repo = g.get_repo(owner + '/' + repo)
     stats = repo.get_stats_contributors()
     json = {'success' : True}
-    contributor, fail = get_contributor_in_list(stats, username)
+    contributor, fail = get_contributors_from_list(stats, username)
     if not fail:
             data = contributor_to_dict(contributor)
             json['lines'] = data['last_week']['additions'] + data['last_week']['deletes']
@@ -47,7 +47,7 @@ def get_commits_week(request, owner, repo, username):
     repo = g.get_repo(owner + '/' + repo)
     stats = repo.get_stats_contributors()
     json = {'success' : True}
-    contributor, fail = get_contributor_in_list(stats, username)
+    contributor, fail = get_contributors_from_list(stats, username)
     if not fail:
             json['commits'] = contributor_to_dict(contributor)['last_week']['commits']
     else:

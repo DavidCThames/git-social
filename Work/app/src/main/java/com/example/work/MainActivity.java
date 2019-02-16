@@ -65,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
 	    requestImage(url);
     }
 
-    public void requestImage(String url) {
+    public void requestImage(final String url) {
         // Request a string response from the provided URL.
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url,new Response.Listener<String>() {
             @Override
@@ -107,8 +107,9 @@ public class MainActivity extends AppCompatActivity {
     private File bitmapToFile(Bitmap b) {
         File f = null;
         try {
-            f = new File(getExternalFilesDir(Environment.DIRECTORY_PICTURES), "new_file.png");
-            f.createNewFile();
+//            f = new File(getExternalFilesDir(Environment.DIRECTORY_PICTURES), "new_file.png");
+            f = new File(getFilesDir(), "new_file.png");
+//            f.createNewFile();
 
             ByteArrayOutputStream bos = new ByteArrayOutputStream();
             b.compress(Bitmap.CompressFormat.PNG, 100 /*ignored for PNG*/, bos);

@@ -23,8 +23,11 @@ import com.android.volley.toolbox.Volley;
 import com.snapchat.kit.sdk.SnapCreative;
 import com.snapchat.kit.sdk.creative.api.SnapCreativeKitApi;
 import com.snapchat.kit.sdk.creative.exceptions.SnapMediaSizeException;
+import com.snapchat.kit.sdk.creative.exceptions.SnapStickerSizeException;
 import com.snapchat.kit.sdk.creative.media.SnapMediaFactory;
 import com.snapchat.kit.sdk.creative.media.SnapPhotoFile;
+import com.snapchat.kit.sdk.creative.media.SnapSticker;
+import com.snapchat.kit.sdk.creative.models.SnapLiveCameraContent;
 import com.snapchat.kit.sdk.creative.models.SnapPhotoContent;
 
 import java.io.ByteArrayOutputStream;
@@ -34,6 +37,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 
 public class MainActivity extends AppCompatActivity {
+
+    RequestQueue queue;
 
     private Bitmap decodeBase64(String imageString) {
         byte[] imageBytes;
@@ -58,33 +63,26 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.nonono);
-
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-        byte[] imageBytes = baos.toByteArray();
-        String imageString = Base64.encodeToString(imageBytes, Base64.DEFAULT);
-
         // Instantiate the RequestQueue.
-	    RequestQueue queue = Volley.newRequestQueue(this);
+	    queue = Volley.newRequestQueue(this);
 	    String url ="http://git-social.com/api/v1/ArchiveTeam/ArchiveBot/user/ivan/sticker/week";
-	
-	    // Request a string response from the provided URL.
-	    StringRequest stringRequest = new StringRequest(Request.Method.GET, url,new Response.Listener<String>() {
+	    requestImage(url);
+    }
+
+    public void requestImage(String url) {
+        // Request a string response from the provided URL.
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Log.d("RESPNSESEPRJSE","mess");
-                System.out.println(response);
                 sendImage(response);
             }
-            }, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    System.out.println(error);
-                    error.printStackTrace();
-                }
-		    }
-		);
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+            }
+        }
+        );
 
         // Add the request to the RequestQueue.
         queue.add(stringRequest);
@@ -98,16 +96,16 @@ public class MainActivity extends AppCompatActivity {
 
         File f = bitmapToFile(decodedImage);
 
-        SnapPhotoContent snp = null;
-        SnapPhotoFile spf = null;
+        SnapLiveCameraContent snapLiveCameraContent = new SnapLiveCameraContent();
+        SnapSticker sticker = null;
         try {
-            spf = snapMediaFactory.getSnapPhotoFromFile(f);
-        } catch (SnapMediaSizeException e) {
-            System.out.println(e);
+            sticker = snapMediaFactory.getSnapStickerFromFile(f);
+        } catch (SnapStickerSizeException e) {
+            e.printStackTrace();
         }
 
-        snp = new SnapPhotoContent(spf);
-        snapCreativeKitApi.send(snp);
+        snapLiveCameraContent.setSnapSticker(sticker);
+        snapCreativeKitApi.send(snapLiveCameraContent);
     }
 
     private File bitmapToFile(Bitmap b) {
@@ -117,7 +115,7 @@ public class MainActivity extends AppCompatActivity {
             f.createNewFile();
 
             ByteArrayOutputStream bos = new ByteArrayOutputStream();
-            b.compress(Bitmap.CompressFormat.JPEG, 100 /*ignored for PNG*/, bos);
+            b.compress(Bitmap.CompressFormat.PNG, 100 /*ignored for PNG*/, bos);
             byte[] bitmapData = bos.toByteArray();
 
             FileOutputStream fos = new FileOutputStream(f);

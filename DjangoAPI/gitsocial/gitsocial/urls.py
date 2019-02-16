@@ -19,7 +19,8 @@ from django.conf.urls import include, url
 
 
 urlpatterns = [
-    url('', include('sitemain.urls')),
     url(r'^admin/', admin.site.urls),
     url(r'^api/', include('gitapi.urls')),
+    url('', include('users.urls')),
+    url('', include('sitemain.urls')),    
 ]

@@ -1,3 +1,4 @@
+django-widget-tweaks==1.4.3
 Django==2.1.5
 PyGithub==1.43.5
 gunicorn==19.9.0

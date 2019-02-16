@@ -22,7 +22,25 @@ def get_lines_today(request, owner, repo, username):
     json = {'success' : True}
     for contributor in stats:
         if contributor.author.login == username:
-            json['contributors'] = contributor_to_dict(contributor)
+            data = contributor_to_dict(contributor)
+            json['lines'] = data['last_week']['additions'] + data['last_week']['deletes']
+            json['additions'] = data['last_week']['additions']
+            json['deletes'] = data['last_week']['deletes']
+            break
+    else:
+        json['success'] = False
+        json['error']  = 'username not found'
+            
+
+    return JsonResponse(json, safe=False)
+
+def get_commits_today(request, owner, repo, username):
+    repo = g.get_repo(owner + '/' + repo)
+    stats = repo.get_stats_contributors()
+    json = {'success' : True}
+    for contributor in stats:
+        if contributor.author.login == username:
+            json['commits'] = contributor_to_dict(contributor)['last_week']['commits']
             break
     else:
         json['success'] = False

@@ -39,7 +39,7 @@ export default class LoginPage extends Component {
     }
   }
   
-  const styles = StyleSheet.create({
+const styles = StyleSheet.create({
     app_container: {
       flex: 1,
       justifyContent: 'center',
@@ -56,4 +56,4 @@ export default class LoginPage extends Component {
       color: '#333333',
       marginBottom: 5,
     },
-  });
+});

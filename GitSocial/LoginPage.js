@@ -2,6 +2,9 @@ import React, {Component} from 'react';
 import {StyleSheet, Text, View, Button} from 'react-native';
 
 export default class LoginPage extends Component {
+    static navigationOptions = {
+        header: null,
+    };
     constructor(props) {
       super(props);
   

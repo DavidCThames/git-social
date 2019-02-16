@@ -3,6 +3,9 @@ import {StyleSheet, Text, View, Button} from 'react-native';
 import SnapkitModule from "./SnapkitModule.js";
 
 export default class MainPage extends Component {
+    static navigationOptions = {
+        header: null,
+    };
     constructor(props) {
       super(props);
       this.sendSticker = this.sendSticker.bind(this);

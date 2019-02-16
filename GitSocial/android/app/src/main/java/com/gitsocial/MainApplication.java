@@ -4,6 +4,7 @@ import com.gitsocial.SnapkitPackage;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.swmansion.gesturehandler.react.RNGestureHandlerPackage;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
@@ -24,6 +25,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new RNGestureHandlerPackage(),
               new SnapkitPackage()
       );
     }

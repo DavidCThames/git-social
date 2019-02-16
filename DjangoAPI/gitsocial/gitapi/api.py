@@ -15,7 +15,7 @@ def contributor_to_dict(contributor):
         }
     return d
 
-def get_lines_today(request):
+def get_lines_today(request,username):
     repo = g.get_repo('ArchiveTeam/ArchiveBot')
     stats = repo.get_stats_contributors()
     json = {'contributors': []}

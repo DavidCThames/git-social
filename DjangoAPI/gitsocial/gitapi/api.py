@@ -16,7 +16,7 @@ def contributor_to_dict(contributor):
         }
     return d
 
-def get_lines_today(request, owner, repo, username):
+def get_lines_week(request, owner, repo, username):
     repo = g.get_repo(owner + '/' + repo)
     stats = repo.get_stats_contributors()
     json = {'success' : True}
@@ -34,7 +34,7 @@ def get_lines_today(request, owner, repo, username):
 
     return JsonResponse(json, safe=False)
 
-def get_commits_today(request, owner, repo, username):
+def get_commits_week(request, owner, repo, username):
     repo = g.get_repo(owner + '/' + repo)
     stats = repo.get_stats_contributors()
     json = {'success' : True}

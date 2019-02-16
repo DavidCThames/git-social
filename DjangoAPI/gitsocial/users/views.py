@@ -13,7 +13,7 @@ def register(request):
             user.save()
             current_site = get_current_site(request)
             mail_subject = 'Activate your Study Skills Account'
-            message = render_to_string('login/validate_email.html', {
+            message = render_to_string('users/validate_email.html', {
                 'user': user,
                 'domain': current_site.domain,
                 'uid':urlsafe_base64_encode(force_bytes(user.pk)).decode(),
@@ -26,9 +26,9 @@ def register(request):
         else: # needed for form ValidationErrors
             messages.error(request, 'A field is invalid, fix the errors below')
             
-            return render(request, 'login/register.html', {'form' : form})
+            return render(request, 'users/register.html', {'form' : form})
     else:
         form  = CustomUserCreationForm()
-        return render(request, 'login/register.html', {'form' : form})
+        return render(request, 'users/register.html', {'form' : form})
 
 

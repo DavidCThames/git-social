@@ -1,5 +1,29 @@
 {% extends "base.html" %}
-
+{% load widget_tweaks %}
 {% block content %}
-
+  <div class="row">
+    <form class="col s12">
+      <div class="row">
+        <div class="input-field col s6">
+          <input placeholder="Placeholder" id="username" type="text" class="validate">
+          <label for="username">Username</label>
+        </div>
+        <div class="input-field col s6">
+          <input id="email" type="text" class="validate">
+          <label for="email">Email</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s6">
+          <input id="password1" type="password" class="validate">
+          <label for="password1">Password</label>
+        </div>
+	<div class="input-field col s6">
+          <input id="password2" type="password" class="validate">
+          <label for="password">Confirm Password</label>
+        </div>
+      </div>
+    </form>
+  </div>
+    
 {% endblock %}

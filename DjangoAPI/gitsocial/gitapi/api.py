@@ -100,8 +100,8 @@ def get_sticker_week(request, owner, repo, username):
             font = ImageFont.truetype("./gitapi/static/font/Roboto-Regular.ttf", 24)
             font_secondary = ImageFont.truetype("./gitapi/static/font/Roboto-Regular.ttf", 12)
             draw.text((80, 85),str(data['last_week']['additions'] + data['last_week']['deletes']),(0,0,0),font=font)
-            draw.text((80, 170),str(data['last_week']['commits']),(0,0,0),font=font)
-            draw.text((30, 225),str(owner + '/' + repo),(95,99,104),font=font_secondary)
+            draw.text((80, 155),str(data['last_week']['commits']),(0,0,0),font=font)
+            draw.text((30, 265),str(owner + '/' + repo),(95,99,104),font=font_secondary)
 
             #Convert to base64
             buffered = BytesIO()

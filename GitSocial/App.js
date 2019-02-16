@@ -8,7 +8,8 @@
  */
 
 import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View, Button} from 'react-native';
+import {Platform, StyleSheet, Text, View, Button, NativeModules} from 'react-native';
+import SnapkitModule from "./SnapkitModule.js";
 
 const instructions = Platform.select({
   ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
@@ -18,6 +19,14 @@ const instructions = Platform.select({
 });
 
 export default class App extends Component {
+  constructor() {
+    super()
+  }
+
+  sendSticker() {
+    SnapkitModule.requestImage("http://git-social.com/api/v1/ArchiveTeam/ArchiveBot/user/ivan/sticker/week");
+  }
+
   render() {
     return (
       <View style={styles.app_container}>
@@ -26,7 +35,7 @@ export default class App extends Component {
         </View>
         <View>
           <Button
-            onPress={()=>{}}
+            onPress={this.sendSticker}
             title="Add Snapchat Filter"
             color="#841584"
           />

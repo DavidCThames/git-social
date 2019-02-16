@@ -17,7 +17,7 @@ def contributor_to_dict(contributor):
     d['username'] = contributor.author.login
     d['name'] = contributor.author.name
     d['total'] = contributor.total
-    last_week = contributor.weeks(len(contributor.weeks)-1)
+    last_week = contributor.weeks[len(contributor.weeks)-1]
     d['last_week'] = { # TODO: Might be first week...
         
         'additions': last_week.a,

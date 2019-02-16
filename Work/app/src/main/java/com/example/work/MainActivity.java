@@ -54,7 +54,6 @@ public class MainActivity extends AppCompatActivity {
         });
 
         Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.insta);
-//        System.out.println(bitmap);
 
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
@@ -100,10 +99,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         snp = new SnapPhotoContent(spf);
-
-        System.out.println("survive");
         snapCreativeKitApi.send(snp);
-        System.out.println("die?");
     }
 
     private File bitmapToFile(Bitmap b) {

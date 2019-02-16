@@ -1,6 +1,8 @@
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 from github import Github
-
+from PIL import Image
+import base64
+from io import BytesIO
 
 g = Github('ebd026d4736c985826055cc7b1d8a5db1c6f26b3')
 
@@ -72,3 +74,11 @@ def get_leaderboard_commits_week(request, owner, repo):
     json['contributors'].sort(key=lambda x: x['commits'], reverse=True)
 
     return JsonResponse(json, safe=False)
+
+def get_image(request):
+    img = Image.new('RGB', (800,1280), (255, 255, 255))
+    buffered = BytesIO()
+    img.save(buffered, format="JPEG")
+    img_str = base64.b64encode(buffered.getvalue())
+    return HttpResponse(img_str, content_type="text/plain")
+

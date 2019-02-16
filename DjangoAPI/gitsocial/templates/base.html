@@ -1,7 +1,10 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
     <head>
 	<!--Import Google Icon Font-->
+	<link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
+
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 	<!--Import materialize.css-->
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
@@ -21,6 +24,17 @@
 		  </ul>
 	      </div>
 	  </nav>
+			
+	      {% if messages %}
+		  {% for message in messages %}
+		      <div class="materialert {{message.tags}}">  <!-- singular -->
+<!--			  <button type="button" class="close-alert">×</button>-->
+			  {{ message|safe }}
+		      </div>
+		  {% endfor %}
+	      {% endif %}
+
+
 	  <div class="row">
 	      <div class="col s2"></div>
 	      <div style=" margin-left: auto; margin-right: auto" class="col s8">
@@ -29,7 +43,8 @@
 	      </div>
 	      <div class="col s2"></div>
 	  </div>
-	<!--JavaScript at end of body for optimized loading-->
+	  <!--JavaScript at end of body for optimized loading-->
+
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     </body>
 </html>

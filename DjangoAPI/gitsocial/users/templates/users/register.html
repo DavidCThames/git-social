@@ -1,28 +1,39 @@
 {% extends "base.html" %}
 {% load widget_tweaks %}
 {% block content %}
-  <div class="row">
-    <form class="col s12">
+    <div class="row">
+	{% for error in field.errors %}
+            <span class="help-block">{{ error }}</span>
+	{% endfor %}
+    </div>
+    <form class="col s12" method="POST">
+	      {% csrf_token %}
       <div class="row">
         <div class="input-field col s6">
-          <input placeholder="Placeholder" id="username" type="text" class="validate">
-          <label for="username">Username</label>
+	    {% render_field form.username class+="validate" %}
+            <label for="username">Username</label>
+	    {{form.username.errors}}	    
         </div>
         <div class="input-field col s6">
-          <input id="email" type="text" class="validate">
-          <label for="email">Email</label>
+	    {% render_field form.email class+="validate" %}
+            <label for="email">Email</label>
+
         </div>
       </div>
       <div class="row">
         <div class="input-field col s6">
-          <input id="password1" type="password" class="validate">
-          <label for="password1">Password</label>
+	    {% render_field form.password1 class+="validate" placeholder="hunter2"%}
+            <label for="password1">Password</label>
+	    {{form.password1.errors}}
         </div>
 	<div class="input-field col s6">
-          <input id="password2" type="password" class="validate">
-          <label for="password">Confirm Password</label>
+	    {% render_field form.password2 class+="validate" %}
+            <label for="password">Confirm Password</label>
+	    {{form.password2.errors}}
         </div>
       </div>
+      <button class="btn waves-effect waves-light" type="submit" name="action">Submit
+      </button>
     </form>
   </div>
     

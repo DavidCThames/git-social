@@ -56,4 +56,5 @@ def user_info(request, owner, repo, username, time):
     
 
 
-    return render(request, 'webapp/user_info.html', {'owner': owner, 'repo': repo, 'username': username, 'data_lines': data_lines, 'data_commits': data_commits, 'data_badges': data_badges, 'data_leaderboard': data_leaderboard})
+    return render(request, 'webapp/user_info.html', {'owner': owner, 'repo': repo, 'username': username, 'time': time, 'data_lines': data_lines, 'data_commits': data_commits, 'data_badges': data_badges, 'data_leaderboard': data_leaderboard})
+

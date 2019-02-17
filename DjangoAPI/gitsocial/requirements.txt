@@ -3,3 +3,5 @@ Django==2.1.5
 PyGithub==1.43.5
 gunicorn==19.9.0
 Pillow==5.4.1
+whitenoise==3.3.1
+

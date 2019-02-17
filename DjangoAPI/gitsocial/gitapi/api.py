@@ -86,19 +86,22 @@ def get_image(request):
 
 def get_sticker_week(request, owner, repo, username):
     #Get lines
-    repo = g.get_repo(owner + '/' + repo)
-    stats = repo.get_stats_contributors()
+    github_repo = g.get_repo(owner + '/' + repo)
+    stats = github_repo.get_stats_contributors()
     contributor, fail = get_contributors_from_list(stats, username)
     if not fail:
             data = contributor_to_dict(contributor)
-            
+
             #Load the image
             img = Image.open("./gitapi/static/img/Sticker_Week.png")
 
             #Add text to the image
             draw = ImageDraw.Draw(img)
             font = ImageFont.truetype("./gitapi/static/font/Roboto-Regular.ttf", 24)
-            draw.text((100, 100),str(data['last_week']['additions'] + data['last_week']['deletes']),(0,0,0),font=font)
+            font_secondary = ImageFont.truetype("./gitapi/static/font/Roboto-Regular.ttf", 12)
+            draw.text((80, 85),str(data['last_week']['additions'] + data['last_week']['deletes']),(0,0,0),font=font)
+            draw.text((80, 155),str(data['last_week']['commits']),(0,0,0),font=font)
+            draw.text((30, 265),str(owner + '/' + repo),(95,99,104),font=font_secondary)
 
             #Convert to base64
             buffered = BytesIO()
@@ -113,4 +116,12 @@ def get_sticker_week(request, owner, repo, username):
     return JsonResponse(json, safe=False)
 
 
+def get_sticker_badge(request, id):
+    #Load the image
+    img = Image.open("./gitapi/static/img/Badges-" + id + ".png")
     
+    #Convert to base64
+    buffered = BytesIO()
+    img.save(buffered, format="PNG")
+    img_str = base64.b64encode(buffered.getvalue())
+    return HttpResponse(img_str, content_type="text/plain")

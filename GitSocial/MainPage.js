@@ -15,24 +15,31 @@ export default class MainPage extends Component {
     constructor(props) {
       super(props);
       this.state = {
-        owner: "facebook",
-        repo: "react-native",
-        user: "fkgozali",
-        sort: "week",
+        repoName: "",
+        user: "",
+        sort: "",
         numCommits: "",
         numAdditions: "",
         base64Image: "",
         pickRepo: [],
         repoWheel: "",
-        leaderboardArr: []
+        leaderboardArr: [],
+        badgeArr: []
       };
 
       this.sendSticker = this.sendSticker.bind(this);
       this.pullData = this.pullData.bind(this);
       this.pullBoard = this.pullBoard.bind(this);
+      this.fetchAll = this.fetchAll.bind(this);
+      this.populateAllData = this.populateAllData.bind(this);
+      this.pickerChange = this.pickerChange.bind(this);
+      this.setStateFromRepoObject = this.setStateFromRepoObject.bind(this);
+      this.populateSingleRepo = this.populateSingleRepo.bind(this);
 
-      this.pullData();
-      this.pullBoard();
+    //   this.pullData();
+    //   this.pullBoard();
+      this.populateAllData();
+    //   this.fetchAll();
     }
   
     sendSticker() {
@@ -40,7 +47,7 @@ export default class MainPage extends Component {
     }
 
    async pullData() {
-        let requestString = this.state.owner + "/" + this.state.repo + "/user/" + 
+        let requestString = this.state.repoName + "/user/" + 
                             this.state.user + "/sticker/" + this.state.sort;
         try {
             let response = await fetch("http://git-social.com/api/v1/" + requestString);
@@ -53,6 +60,71 @@ export default class MainPage extends Component {
         }
         catch(error) {
             console.error(error);
+        }
+    }
+
+    async populateAllData() {
+        let allData = await this.fetchAll();
+        if (allData.repo_names.length === 0) {
+            return;
+        }
+
+        let repoName = allData.repo_names[0];
+        let repo = allData.repos[repoName];
+        this.setStateFromRepoObject(repoName, repo);
+        this.setState({
+            pickRepo: allData.repo_names,
+        })
+    }
+
+    setStateFromRepoObject(repoName, repo) {
+        let badges = [];
+
+        for(var badge in repo.badge_imgs) {
+            badges.push(badge.replace("b'", "").replace("'",""));
+        }
+
+        this.setState({
+            repoName: repoName,
+            sort: "month",
+            user: global.user,
+            numCommits: repo.commits,
+            numAdditions: repo.deletes + repo.additions,
+            base64Image: repo.image.replace("b'", "").replace("'",""),
+            repoWheel: repoName,
+            leaderboardArr: repo.contributors,
+            badgeArr: badges
+        });
+    }
+
+    async populateSingleRepo(repoName) {
+        try {
+            let response = await fetch("http://git-social.com/api/v1/userone/" + 
+                            repoName + "/user/" + this.state.user + "/" + this.state.sort);
+            
+            let newRepo = await response.json();
+            this.setStateFromRepoObject(repoName, newRepo);
+        }
+        catch(error) {
+            console.error(error);
+        }
+    }
+
+    async pickerChange(itemValue, itemIndex) {
+        this.setState({repoWheel: itemValue});
+        await this.populateSingleRepo(itemValue);
+
+    }
+
+    async fetchAll() {
+        try {
+          let response = await fetch("http://git-social.com/api/v1/userall/user/" + global.user + "/month/");
+          let responseJson = await response.json();
+          return responseJson;
+        }
+        catch(error) {
+          console.error(error);
+          return null;
         }
     }
 
@@ -86,14 +158,12 @@ export default class MainPage extends Component {
                     selectedValue={this.state.repoWheel}
                     style={{height: 75, width: 200, color: '#ffffff'}}
                     itemStyle={{color: '#ffffff', fontSize: 40, fontFamily: 'roboto'}}
-                    onValueChange={(itemValue, itemIndex) =>
-                    this.setState({repoWheel: itemValue})
-                      }>
-                        
-                        <Picker.Item label="Repo1" value="f1" />
-                        <Picker.Item label="Repo2: Electric Repoloo" value="f2" />
-                        <Picker.Item label="Repo3: Before the Repo" value="f3" />
-                        <Picker.Item label="Repo4: The Reponing" value="f4" />
+                    onValueChange={this.pickerChange}>
+                        {
+                            this.state.pickRepo.map((rowData, rowIndex) => (
+                                <Picker.Item label={rowData} value={rowData} />
+                            ))
+                        }
                   </Picker>
                     
                 </Surface>

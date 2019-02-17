@@ -55,6 +55,9 @@ export default class MainApp extends Component {
   async login() {
     this.setState({loggingIn: true})
     let validated = await this.validateUser();
+    if (validated) {
+      global.user = this.state.loginText.trim();
+    }
     this.setState({loggedIn: validated, loggingIn: false});
   }
 

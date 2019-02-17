@@ -127,6 +127,7 @@ export default class MainApp extends Component {
             <View style={styles.loginbutton_container}>
                 <Button 
                     loading={this.state.loggingIn} 
+                    disabled={this.state.loginText.trim() === ""}
                     mode="contained" 
                     onPress={() => this.login()}
                     style={{justifyContent: 'center',

@@ -6,6 +6,8 @@ import base64
 from io import BytesIO
 from PIL import ImageFont
 from PIL import ImageDraw
+from users.models import User
+from repos.models import Repos
 
 
 g = Github('ebd026d4736c985826055cc7b1d8a5db1c6f26b3')
@@ -16,7 +18,10 @@ def get_contributors_from_list(contributors, username):
             return contributor, False
     return None, True
 
+def get_user_repo(contributor):
+    json
     
+    return JsonResponse(json, safe=False)
 
 def contributor_to_dict(contributor, dt):
     d = {}
@@ -35,7 +40,8 @@ def contributor_to_dict(contributor, dt):
     if dt == 'month':
         month = [0,0,0,0]
         month[0] = contributor.weeks[-2].w
-        for i in range(-2,-6,-1):
+        low = max(-6, -len(contributor.weeks)-1)
+        for i in range(-2,low,-1):
             cur = contributor.weeks[i]
             month[1] += cur.a
             month[2] += cur.d
@@ -46,8 +52,6 @@ def contributor_to_dict(contributor, dt):
                 'deletes' : month[2],
                 'commits' : month[3]
             }
-        
-
 
     
     return d

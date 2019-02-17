@@ -4,6 +4,7 @@ from . import api
 
 app_name = 'api'
 urlpatterns = [
+    url(r'^v1/userrepo/(?P<username>[\w-]+)/?$', api.get_user_repo, name="get_user_repo"),
     url(r'^v1/(?P<owner>[\w-]+)/(?P<repo>[\w-]+)/user/(?P<username>[\w-]+)/lines/(?P<dt>(week|month))/?$', api.get_lines, name="get_lines"),
     url(r'^v1/(?P<owner>[\w-]+)/(?P<repo>[\w-]+)/user/(?P<username>[\w-]+)/commits/(?P<dt>(week|month))/?$', api.get_commits, name="get_lines"),
     url(r'^v1/(?P<owner>[\w-]+)/(?P<repo>[\w-]+)/leaderboard/commits/(?P<dt>(week|month))/?$', api.get_leaderboard_commits, name="get_commits"),

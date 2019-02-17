@@ -90,6 +90,61 @@
                         <a href="http://git-social.com/api/v1/badge/02">http://git-social.com/api/v1/badge/02</a>
                 </div>
             </div>
+
+            <div class="card">
+                <div class="card-content">
+                    <span class="card-title">Get All Info for a User Under a Repository</span>
+                    <p><b>URL:</b> git-social.com/api/v1/userone/[owner]/[repo]/user/[username]/["week" or "month"]/</p>
+
+                    <p><b>Response:</b>
+                    <p>{
+                            "success": true, 
+                            "selected": contributor object corresponding to [username]  
+                            "badge_ids": [1, 4, 5, 6], 
+                            "badge_imgs": [list of encoded images in order of badge ids],
+                            “commits”: [total commit count in timeframe], 
+                            “image”: [encoded sticker]
+                            “contributors”: [list of contributor objects]	
+                            "last_week": {"time": "2019-02-10T00:00:00", "additions": 253546, "deletes": 2016, "commits": 33}
+                    </p>
+                    <p><b>contributor objects:</b> {
+                                “username”: [username of committor]
+                                “name”: [name]
+                                commits:[number of commits by user]
+                    </p>
+                </div>
+                <div class="card-action">
+                        <a href="http://git-social.com/api/v1/userone/ArchiveTeam/ArchiveBot/user/ivan/week">http://git-social.com/api/v1/uesrone/ArchiveTeam/ArchiveBot/user/ivan/week </a>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-content">
+                    <span class="card-title">Get All Info for a User Under All of Their Repository</span>
+                    <p><b>URL:</b> git-social.com/api/v1/userall/user/[username]/["week" or "month"]/</p>
+
+                    <p><b>Response:</b>
+                    <p>{"repo_names": [list of owner/repos_names on user], “repos” : [dictionary of json repo objects indexed by repo_names]}</p>
+                    <p><b>json repo objects:</b> {
+                            "success": true, 
+                            "selected": contributor object corresponding to [username]  
+                            "badge_ids": [1, 4, 5, 6], 
+                            "badge_imgs": [list of encoded images in order of badge ids],
+                            “commits”: [total commit count in timeframe], 
+                            “image”: [encoded sticker]
+                            “contributors”: [list of contributor objects]	
+                            "last_week": {"time": "2019-02-10T00:00:00", "additions": 253546, "deletes": 2016, "commits": 33}
+                    </p>
+                    <p><b>contributor objects:</b> {
+                                “username”: [username of committor]
+                                “name”: [name]
+                                commits:[number of commits by user]
+                    </p>
+                </div>
+                <div class="card-action">
+                        <a href="http://git-social.com/api/v1/userall/user/jackschu/week">http://git-social.com/api/v1/userall/user/jackschu/week</a>
+                </div>
+            </div>
             
         </div> 
         <div class="col s2"></div>

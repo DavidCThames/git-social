@@ -1,4 +1,4 @@
-
+import itertools
 from django.http import JsonResponse, HttpResponse
 from github import Github
 from PIL import Image
@@ -18,8 +18,15 @@ def get_contributors_from_list(contributors, username):
             return contributor, False
     return None, True
 
-def get_user_repo(contributor):
-    json
+def repo_to_url(repo):
+    return repo.owner+'/'+repo.repo_name
+
+def get_user_repo(contributor,user):
+    json = {'repos':[]}
+    u = User.objects.get(username__iexact=user)
+    repos = u.repos_set.all()
+
+    json['repos'] = list(map(repo_to_url,repos))
     
     return JsonResponse(json, safe=False)
 

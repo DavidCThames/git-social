@@ -37,6 +37,15 @@
     <div class="row">
         <div class="col s2"></div>
         <div class="col s8">
+
+            <div class="card">
+                <div class="card-content" style="overflow: auto;">
+                    <span class="card-title">{{username}}'s Badges</span>
+                    {% for badge in data_badges %}
+                        <img width="100"  style="float:left; margin: 20px;" src="data:image/png;base64, {{badge}}">
+                    {% endfor %}
+                </div>
+            </div>
             
             <div class="card">
                 <div class="card-content">
@@ -76,7 +85,7 @@
                     </ol>
                 </div>
             </div>
-
+            
         </div> 
         <div class="col s2"></div>
     </div>

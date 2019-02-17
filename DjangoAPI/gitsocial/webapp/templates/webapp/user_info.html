@@ -88,8 +88,7 @@
                     </tr></table>
                     <ol>
 			<table class="highlight">
-                            {% for contrib in data_leaderboard %}
-		
+                            {% for contrib in data_leaderboard %}		
 				    <tr {%if contrib.username == request.user.username%}style="background:#F8ECC2"{% endif %}>
 				    <td>{{ forloop.counter }}</td>
                                     <td>{{contrib.username}}</td>

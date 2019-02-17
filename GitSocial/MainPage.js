@@ -79,7 +79,7 @@ export default class MainPage extends Component {
         let badges = [];
 
         for(var badge in repo.badge_imgs) {
-            badges.push(badge.replace("b'", "").replace("'",""));
+            badges.push(repo.badge_imgs[badge].replace("b'", "").replace("'",""));
         }
 
         this.setState({

@@ -1,8 +1,9 @@
 import React, {Component} from 'react';
-import {StyleSheet, Text, View, Image} from 'react-native';
+import {StyleSheet, Text, View, Image, TouchableOpacity} from 'react-native';
 import { TextInput, Button, Surface } from 'react-native-paper';
 import Leaderboard from './Leaderboard';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import SnapkitModule from "./SnapkitModule.js";
 
 const badgeIcon = (<Icon name="certificate" size={20} color="#f4f4f4" />);
 export default class BadgePage extends Component {
@@ -14,35 +15,110 @@ export default class BadgePage extends Component {
       super(props);
   
       this.state = {
-          base64Icon: ""
+          badges: []
       };
       this.createBadges = this.createBadges.bind(this);
+      this.renderRow = this.renderRow.bind(this);
+    }
 
-      this.createBadges();
+    componentDidMount () {
+      this.props.navigation.addListener('willFocus', (route) => { 
+          this.setState({badges: global.badges});
+      });
     }
     
-    createBadges = () => {
-        let badges = []
-        // Outer loop to create parent
-        for (let i = 0; i < 3; i++) {
-          this.setState({
-              base64Icon: "http://git-social.com/api/v1/badge/0" + i
-          });
-          badges.push(<Image style={{width: 100, height: 50}} source={{url: base64Icon}} />)
-          badges.push(<Button
-            /*disabled={this.state.base64Image === ""}
-            onPress={this.sendSticker}*/
-            title="Add Snapchat Sticker"
-            color="#841584"
-        />)
+    renderRodw(encStr1, encStr2) {
+      if (encStr2) {
+        console.log("googf");
+        return (
+          <View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-between'}}>
+            <TouchableOpacity onPress={()=>console.log("1")}>
+              <Image style={{width: 150, height: 150}} source={{uri: encStr1}}/>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={()=>()=>console.log("2")}>
+              <Image style={{width: 150, height: 150}} source={{uri: encStr2}}/>
+            </TouchableOpacity>
+          </View>
+        );
+      }
+      else {
+        return (
+          <View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-between'}}>
+            <TouchableOpacity onPress={()=>console.log("1")}>
+              <Image style={{width: 150, height: 150,}} source={{uri: encStr1}}/>
+            </TouchableOpacity>
+          </View>
+        );
+      }
+    }
+
+    renderRow(rowData, index) {
+      // if (rowData) {
+      //   console.log("googf");
+        return (
+          <View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-between'}}>
+            <View>
+              <Image style={{width: 150, height: 150}} source={{uri: "data:image/png;base64," + rowData}}/>
+            </View>
+            <View>
+              <Image style={{width: 150, height: 150}} source={{uri: "data:image/png;base64," + rowData}}/>
+            </View>
+          </View>
+        );
+      // }
+      // else {
+      //   return (
+      //     <View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-between'}}>
+      //       <TouchableOpacity onPress={()=>console.log("1")}>
+      //         <Image style={{width: 150, height: 150,}} source={{uri: encStr1}}/>
+      //       </TouchableOpacity>
+      //     </View>
+      //   );
+      // }
+    }
+
+    createBadges() {
+        let badgesComp = []
+        if (this.state.badges.length === 0) {
+          return badgesComp;
         }
-        return badges
+        // Outer loop to create parent
+        console.log("hello");
+        console.log(this.state.badges);
+        console.log(this.state.badges.length);
+        for (let i = 0; i < this.state.badges.length; i++) {
+          console.log(i);
+          let str1 = "data:image/png;base64," + this.state.badges[i];
+          let str2;
+          if (i + 1 >= this.state.badges.length) {
+            str2 = "";
+          }
+          else {
+            str2 = "data:image/png;base64," + this.state.badges[i+1];
+          }
+          badgesComp.push(this.renderRow(str1, str2));
+        }
+        return badgesComp;
       }
 
     render() {
-        return (
+        if(this.state.badges.length < 2) {
+          return (
             <View>
-                {this.createBadges()}
+              <Text>d</Text>
+            </View>
+          )
+        }
+        return (
+            <View style={{alignItems: "center", justifyContent: 'center'}}>
+                {this.state.badges.map((rowData, index)=>(
+                  <TouchableOpacity onPress={()=>{
+                    SnapkitModule.sendImage(rowData);
+                  }}>
+                    <Image style={{width: 100, height: 100, marginBottom: 10}} source={{uri: "data:image/png;base64," + rowData}}/>
+                  </TouchableOpacity>
+                ))}
+                {/* {this.state.badges.map(this.renderRow)} */}
             </View>
         );
     }

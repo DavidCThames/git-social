@@ -4,8 +4,9 @@ from . import api
 
 app_name = 'api'
 urlpatterns = [
-    url(r'^v1/usercheck/(?P<user>[\w-]+)/?$', api.get_user_check, name="user_check"),    
-    url(r'^v1/userall/(?P<owner>[\w-]+)/(?P<repo>[\w-]+)/user/(?P<user>[\w+]+)/(?P<dt>(week|month))/?$', api.get_all, name="get_all"),
+    url(r'^v1/usercheck/(?P<user>[\w-]+)/?$', api.get_user_check, name="user_check"),
+    url(r'^v1/userone/(?P<owner>[\w-]+)/(?P<repo>[\w-]+)/user/(?P<user>[\w+]+)/(?P<dt>(week|month))/?$', api.get_one, name="get_one"),
+    url(r'^v1/userall/user/(?P<user>[\w+]+)/(?P<dt>(week|month))/?$', api.get_all, name="get_all"),
     url(r'^v1/userrepo/(?P<user>[\w-]+)/?$', api.get_user_repo, name="get_user_repo"),
     url(r'^v1/(?P<owner>[\w-]+)/(?P<repo>[\w-]+)/user/(?P<username>[\w-]+)/lines/(?P<dt>(week|month))/?$', api.get_lines, name="get_lines"),
     url(r'^v1/(?P<owner>[\w-]+)/(?P<repo>[\w-]+)/user/(?P<username>[\w-]+)/commits/(?P<dt>(week|month))/?$', api.get_commits, name="get_lines"),

@@ -43,33 +43,24 @@ def user_info(request, owner, repo, username, time):
         messages.error(request, 'User is not a contributor to this repo! Please modify your search and try again')
         return render(request, 'webapp/home.html')        
     
-    api_endpoint = 'http://git-social.com/api/v1/'+ owner + '/' + repo + '/user/' + username + '/lines/' + time + '/'
+    api_endpoint = 'http://git-social.com/api/v1/userone/'+ owner + '/' + repo + '/user/' + username + '/' + time + '/'
 
     response = requests.get(api_endpoint)
     json_response = response.json()
-    data_lines = json_response['lines']
+    data_lines = 3
+    data_lines = json_response['selected']['last_week']['additions']+json_response['selected']['last_week']['deletes']
 
 
-    api_endpoint = 'http://git-social.com/api/v1/'+ owner + '/' + repo + '/user/' + username + '/commits/' + time + '/'
 
-    response = requests.get(api_endpoint)
-    json_response = response.json()
-    data_commits = json_response['commits']
+    data_commits = json_response['selected']['total']
 
-    api_endpoint = 'http://git-social.com/api/v1/'+ owner + '/' + repo + '/user/' + username + '/badges/' + time + '/'
-    response = requests.get(api_endpoint)
-    json_response = response.json()
-    badge_ids = json_response['badges']
+
+    badge_ids = json_response['badge_ids']
 
     data_badges = []
-    for badge_id in badge_ids:
-        api_endpoint = 'http://git-social.com/api/v1/badge/0' + str(badge_id)
-        response = requests.get(api_endpoint)
-        data_badges.append(response.text)
+    for im_str in json_response['badge_imgs']:
+        data_badges.append(im_str[2:-1])
     
-    api_endpoint = 'http://git-social.com/api/v1/'+ owner + '/' + repo + '/leaderboard/commits/' + time + '/'
-    response = requests.get(api_endpoint)
-    json_response = response.json()
     data_leaderboard = json_response['contributors'][:10]
     
 

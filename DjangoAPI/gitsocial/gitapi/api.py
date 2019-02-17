@@ -47,9 +47,14 @@ def repo_user_to_json(owner, name, dt, user):
         for badge in badges:
             json['badge_imgs'].append(str(get_badge_str(badge)))
     return json
+
+def get_one(request, owner, repo, dt, user):
+    rep =g.get_repo(owner + '/' + repo)
+
+    json = repo_user_to_json(owner, repo, dt, user)
+    return JsonResponse(json, safe=False)
     
-    
-def get_all(request, owner, repo, dt, user):
+def get_all(request, dt,user):
     json = {'repos':{}}
     u = User.objects.get(username__iexact=user)
     repos = u.repos_set.all()
@@ -223,9 +228,16 @@ def get_badge_str(id):
 
 
 def get_sticker_badge(request, id): # Documented
+    #Load the image
+    img = Image.open("./gitapi/static/img/Badges-" + str(id) + ".png")
+    
+    #Convert to base64
+    buffered = BytesIO()
+    img.save(buffered, format="PNG")
+    badge = base64.b64encode(buffered.getvalue())
     
 
-    return HttpResponse(get_badge_str(id), content_type="text/plain")
+    return HttpResponse(badge, content_type="text/plain")
 
 def contrib_to_badge_list(data):
     commits = data['last_week']['commits']

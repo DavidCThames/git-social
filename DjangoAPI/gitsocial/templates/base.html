@@ -1,0 +1,45 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <head>
+	<!--Import Google Icon Font-->
+	<link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
+
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<!--Import materialize.css-->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+	
+	<!--Let browser know website is optimized for mobile-->
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </head>
+    
+    <body>
+	  <nav>
+	      <div class="nav-wrapper" style="background-color:#6200EE">
+		  <a href="{% url 'site:index'%}" style="padding-left:10px" class="brand-logo ">Git Social</a>
+		  <ul id="nav-mobile" class="right hide-on-med-and-down">
+		      <li><a href="sass.html">Sass</a></li>
+		      <li><a href="badges.html">Components</a></li>
+		      <li><a href="collapsible.html">JavaScript</a></li>
+		  </ul>
+	      </div>
+	  </nav>
+
+			
+	      {% if messages %}
+		  {% for message in messages %}
+		      <div class="materialert {{message.tags}}">  <!-- singular -->
+<!--			  <button type="button" class="close-alert">×</button>-->
+			  {{ message|safe }}
+		      </div>
+		  {% endfor %}
+	      {% endif %}
+
+
+	{% block content %}
+	{% endblock %}
+
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    </body>
+</html>

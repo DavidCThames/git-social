@@ -49,10 +49,29 @@ export default class MainApp extends Component {
     }
 
     this.login = this.login.bind(this);
+    this.validateUser = this.validateUser.bind(this);
   }
 
-  login() {
-      this.setState({loggedIn: true});
+  async login() {
+    this.setState({loggingIn: true})
+    let validated = await this.validateUser();
+    this.setState({loggedIn: validated, loggingIn: false});
+  }
+
+  async validateUser() {
+    let user = this.state.loginText.trim();
+    if(user === "") {
+      return false;
+    }
+    try {
+      let response = await fetch("http://git-social.com/api/v1/usercheck/" + user);
+      let responseJson = await response.json();
+      return responseJson.success;
+    }
+    catch(error) {
+      console.error(error);
+      return false;
+    }
   }
 
   render() {

@@ -14,6 +14,7 @@ import MainPage from "./MainPage";
 import LeaderboardPage from "./LeaderboardPage";
 import {StyleSheet, Text, View} from 'react-native';
 import { TextInput, Button, Surface } from 'react-native-paper';
+import BadgePage from "./BadgePage";
 import { Provider as PaperProvider } from 'react-native-paper';
 import {createStackNavigator, createAppContainer} from 'react-navigation';
 import { createMaterialBottomTabNavigator } from 'react-navigation-material-bottom-tabs';

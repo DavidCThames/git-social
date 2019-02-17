@@ -62,8 +62,14 @@ export default class LoginPage extends Component {
                     <TextInput
                         mode="outlined"
                         label="Password"
-                        value={this.state.passwordText}
-                        onChangeText={passwordText => this.setState({ passwordText })}
+                        value={this.state.visibleText}
+                        onChangeText={ (passwordText) => {
+                            var vis = "";
+                            for(var i = 0; i < passwordText.length; i++) {
+                                vis += "*";
+                            }
+                            this.setState({ passwordText: passwordText, visibleText: vis })
+                        }}
                     />
                 </View>
                 

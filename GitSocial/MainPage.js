@@ -37,10 +37,7 @@ export default class MainPage extends Component {
       this.setStateFromRepoObject = this.setStateFromRepoObject.bind(this);
       this.populateSingleRepo = this.populateSingleRepo.bind(this);
 
-    //   this.pullData();
-    //   this.pullBoard();
       this.populateAllData();
-    //   this.fetchAll();
     }
   
     sendSticker() {

@@ -10,4 +10,5 @@ urlpatterns = [
     url(r'^v1/image/?$', api.get_image, name="get_image"),
     url(r'^v1/badge/(?P<id>[0-9]{2})/?$', api.get_sticker_badge, name="get_sticker_badge"),
     url(r'^v1/(?P<owner>[\w-]+)/(?P<repo>[\w-]+)/user/(?P<username>[\w-]+)/sticker/week/?$', api.get_sticker_week, name="get_sticker_week"),
+    url(r'^v1/(?P<owner>[\w-]+)/(?P<repo>[\w-]+)/user/(?P<username>[\w-]+)/badges/week/?$', api.get_badge_list, name="get_sticker_week"),
 ]

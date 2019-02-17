@@ -23,7 +23,7 @@ def contributor_to_dict(contributor):
     d['username'] = contributor.author.login
     d['name'] = contributor.author.name
     d['total'] = contributor.total
-    last_week = contributor.weeks[-1]
+    last_week = contributor.weeks[-2]
 
 
 
@@ -137,3 +137,32 @@ def get_sticker_badge(request, id):
     img.save(buffered, format="PNG")
     img_str = base64.b64encode(buffered.getvalue())
     return HttpResponse(img_str, content_type="text/plain")
+
+def get_badge_list(request, owner, repo, username):
+    repo = g.get_repo(owner + '/' + repo)
+    stats = repo.get_stats_contributors()
+    json = {'success' : True}
+    contributor, fail = get_contributors_from_list(stats, username)
+    if not fail:
+        json['badges'] = []
+        data = contributor_to_dict(contributor)
+        commits = data['last_week']['commits']
+        lines = data['last_week']['additions'] + data['last_week']['deletes']
+        print(lines)
+
+        if commits > 10:
+            json['badges'].append(1)
+        if commits > 50:
+            json['badges'].append(2)
+        if commits > 100:
+            json['badges'].append(3)
+        if lines > 100:
+            json['badges'].append(4)
+        if lines > 500:
+            json['badges'].append(5)
+        if lines > 1000:
+            json['badges'].append(6)
+    else:
+        json['success'] = False
+
+    return JsonResponse(json, safe=False)

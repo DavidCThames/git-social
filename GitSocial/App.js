@@ -27,7 +27,8 @@ const MainNavigator = createStackNavigator({
 const materialNav = createMaterialBottomTabNavigator({
   // Home: {screen: LoginPage, navigationOptions:{tabBarVisible: false}},
   Profile: {screen: MainPage},
-  Leaderboard: {screen: LeaderboardPage}
+  Leaderboard: {screen: LeaderboardPage},
+  Badges: {screen: BadgePage}
 }, {
   initialRouteName: 'Profile',
   activeColor: '#f4f4f4',

@@ -2,9 +2,11 @@ import React, {Component} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import { TextInput, Button, Surface } from 'react-native-paper';
 
+const nothing = (<View></View>);
 export default class LoginPage extends Component {
     static navigationOptions = {
         header: null,
+        
     };
     constructor(props) {
       super(props);
@@ -83,9 +85,7 @@ export default class LoginPage extends Component {
                         style={{justifyContent: 'center',
                         alignItems: 'center', width: 200, height: 75, color: '#6200EE'}}>
 
-                        <Text style={{fontSize: 25}}>
-                          LOG IN
-                        </Text>
+                        Log In
 
                     </Button>
                 </View>

@@ -1,11 +1,14 @@
 import React, {Component} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import { TextInput, Button, Surface } from 'react-native-paper';
-import Leaderboard from './Leaderboard'
+import Leaderboard from './Leaderboard';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
+const trophyIcon = (<Icon name="trophy" size={20} color="#f4f4f4" />);
 export default class LeaderboardPage extends Component {
     static navigationOptions = {
         header: null,
+        tabBarIcon: trophyIcon
     };
     constructor(props) {
       super(props);

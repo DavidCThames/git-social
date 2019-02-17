@@ -3,10 +3,14 @@ import {StyleSheet, Text, View, Button, Picker} from 'react-native';
 import { Surface } from 'react-native-paper';
 import SnapkitModule from "./SnapkitModule.js";
 import Leaderboard from './Leaderboard.js';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
+const homeIcon = (<Icon name="code" size={20} color="#f4f4f4" />);
 export default class MainPage extends Component {
+
     static navigationOptions = {
         header: null,
+        tabBarIcon: homeIcon
     };
     constructor(props) {
       super(props);
@@ -34,8 +38,6 @@ export default class MainPage extends Component {
     sendSticker() {
         SnapkitModule.sendImage(this.state.base64Image);
     }
-
-
 
    async pullData() {
         let requestString = this.state.owner + "/" + this.state.repo + "/user/" + 

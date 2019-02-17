@@ -35,6 +35,7 @@ INSTALLED_APPS = [
 
     'widget_tweaks',
     'sitemain.apps.SitemainConfig',
+    'webapp.apps.WebappConfig',
     'users.apps.UsersConfig',
     'django.contrib.admin',
     'django.contrib.auth',

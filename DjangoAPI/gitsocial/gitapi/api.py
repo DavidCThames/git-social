@@ -23,7 +23,7 @@ def contributor_to_dict(contributor):
     d['username'] = contributor.author.login
     d['name'] = contributor.author.name
     d['total'] = contributor.total
-    last_week = contributor.weeks[-1]
+    last_week = contributor.weeks[-2]
 
 
 

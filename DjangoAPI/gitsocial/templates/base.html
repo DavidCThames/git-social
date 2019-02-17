@@ -22,8 +22,19 @@
 			  <li><a href="{% url 'site:index' %}">Home</a></li>
 			  <li><a href="#">Web App</a></li>
 		      <li><a href="#">Download App</a></li>
-			  <li><a href="{% url 'site:apidocs' %}">API Documentation</a></li>
-			  <li><a href="#">Login/Register</a></li>
+		      <li><a href="{% url 'site:apidocs' %}">API Documentation</a></li>
+		      {% if request.user.is_authenticated %}
+			  <li>
+			      <a ='padding-right:10px'>Hello, {{request.user.username}}</a>
+			  </li>
+			  <li>
+			      <a href="{% url 'users:logout'%}">[Logout]</a>
+			  </li>
+		      {% else %}
+			  <li><a href="{% url 'users:login' %}">Login/Register</a></li>
+		      {% endif %}
+	      
+
 		  </ul>
 	      </div>
 	  </nav>

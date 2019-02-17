@@ -6,23 +6,30 @@
             <span class="help-block">{{ error }}</span>
 	{% endfor %}
     </div>
-    <form class="col s12" method="POST">
-	      {% csrf_token %}
-      <div class="row">
-        <div class="input-field col s6">
-	    {% render_field form.username class+="validate" %}
-            <label for="username">Username</label>
-	    {{form.username.errors}}	    
-        </div>
-        <div class="input-field col s6">
-	    {% render_field form.password class+="validate" %}
-            <label for="email">Password</label>
+    <div class="row">
+	<div class="col s2"></div>
+	<form class="col s8" method="POST">
+	    {% csrf_token %}
+	    <div class="row">
+		<div class="input-field col s4">
+		    {% render_field form.username class+="validate" %}
+		    <label for="username">Username</label>
+		    {{form.username.errors}}	    
+		</div>
+		<div class="input-field col s4">
+		    {% render_field form.password class+="validate" %}
+		    <label for="email">Password</label>
 
-        </div>
-      </div>
-      <button class="btn waves-effect waves-light" type="submit" name="action">Submit
-      </button>
-    </form>
+		</div>
+	    </div>
+	    <button class="btn waves-effect waves-light" type="submit" name="action">Login
+	    </button>
+	    <a href="{% url 'users:register' %}" class="btn waves-effect waves-light red">Register</a>
+
+	</form>
+	
+	<div class="col s2"></div>
+    </div>
   </div>
     
 {% endblock %}

@@ -63,7 +63,9 @@ def contributor_to_dict(contributor, dt):
     
     return d
 
-def get_lines(request, owner, repo, username, dt):
+
+def get_lines(request, owner, repo, username, dt): # Documented
+
     repo = g.get_repo(owner + '/' + repo)
     stats = repo.get_stats_contributors()
     json = {'success' : True}
@@ -80,7 +82,9 @@ def get_lines(request, owner, repo, username, dt):
 
     return JsonResponse(json, safe=False)
 
-def get_commits(request, owner, repo, username, dt):
+
+def get_commits(request, owner, repo, username, dt): # Documented
+
     repo = g.get_repo(owner + '/' + repo)
     stats = repo.get_stats_contributors()
     json = {'success' : True}
@@ -94,7 +98,8 @@ def get_commits(request, owner, repo, username, dt):
 
     return JsonResponse(json, safe=False)
 
-def get_leaderboard_commits(request, owner, repo, dt):
+
+def get_leaderboard_commits(request, owner, repo, dt): # Documented
     repo = g.get_repo(owner + '/' + repo)
     stats = repo.get_stats_contributors()
     json = {'success': True, 'contributors': []}
@@ -110,15 +115,8 @@ def get_leaderboard_commits(request, owner, repo, dt):
 
     return JsonResponse(json, safe=False)
 
-def get_image(request):
-    img = Image.new('RGB', (800,1280), (255, 255, 255))
-    buffered = BytesIO()
-    img.save(buffered, format="PNG")
-    img_str = base64.b64encode(buffered.getvalue())
-    return HttpResponse(img_str, content_type="text/plain")
+def get_sticker(request, owner, repo, username, dt): # Documented
 
-
-def get_sticker(request, owner, repo, username, dt):
     #Get lines
     github_repo = g.get_repo(owner + '/' + repo)
     stats = github_repo.get_stats_contributors()
@@ -156,7 +154,9 @@ def get_sticker(request, owner, repo, username, dt):
     return JsonResponse(json, safe=False)
 
 
-def get_sticker_badge(request, id):
+
+def get_sticker_badge(request, id): # Documented
+
     #Load the image
     img = Image.open("./gitapi/static/img/Badges-" + id + ".png")
     
@@ -166,7 +166,9 @@ def get_sticker_badge(request, id):
     img_str = base64.b64encode(buffered.getvalue())
     return HttpResponse(img_str, content_type="text/plain")
 
-def get_badge_list(request, owner, repo, username, dt):
+
+def get_badge_list(request, owner, repo, username, dt): # Documented
+
     repo = g.get_repo(owner + '/' + repo)
     stats = repo.get_stats_contributors()
     json = {'success' : True}

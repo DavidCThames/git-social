@@ -37,10 +37,29 @@
     <div class="row">
         <div class="col s2"></div>
         <div class="col s8">
+            <div style="height: 75px">
+                <div class="input-field col s12">
+                    <select id="time">
+                        <option {% if time == "week" %}selected{% endif %} value="week">Week</option>
+                        <option {% if time == "month" %}selected{% endif %} value="month">Month</option>
+                    </select>
+                    <label>Time Period</label>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-content" style="overflow: auto;">
+                    <span class="card-title">{{username}}'s Badges</span>
+                    {% for badge in data_badges %}
+                        <img width="100"  style="float:left; margin: 20px;" src="data:image/png;base64, {{badge}}">
+                    {% endfor %}
+                </div>
+            </div>
             
             <div class="card">
                 <div class="card-content">
-                    <span class="card-title">{{username}}'s Week</span>
+                    <span class="card-title">{{username}}'s {{time}}</span>
+
 
                     <div class="row">
                         <div class="input-field col s12 info">
@@ -80,4 +99,17 @@
         </div> 
         <div class="col s2"></div>
     </div>
+
+    <script>
+        $(document).ready(function(){
+            $('select').formSelect();
+        });
+
+        $(function() {
+            $("#time").change(function() {
+                window.location = "./" + $("#time").val()
+            })
+        })
+    </script>
+
 {% endblock %}

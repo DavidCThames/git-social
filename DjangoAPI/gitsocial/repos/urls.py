@@ -5,9 +5,10 @@ from . import views
 
 app_name = 'repos'
 urlpatterns = [
-    re_path(r'^view/(?P<owner>[0-9A-Za-z_\-]+)/(?P<repo>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
+    re_path(r'^view/(?P<owner>[\w-]+)/(?P<repo>[\w-]+)/$',
             views.repo,
             name='one_repo'
     ),
+    path('add/', views.add, name='add'),
 
     ]

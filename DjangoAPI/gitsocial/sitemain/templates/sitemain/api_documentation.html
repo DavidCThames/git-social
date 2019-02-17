@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+{% load static %}
+
+
+{% block content %}
+    <div class="row header-container">
+        <div class="col s2"></div>
+        <div class="col s8">
+            <h1>API Documentation</h1>
+
+            <div class="card">
+                <div class="card-content">
+                    <span class="card-title">Lines This Week by a User</span>
+                    <p><b>URL:</b> git-social.com/api/v1/[owner]/[repo]/user/[username]/lines/week/</p>
+                    <p><b>Response:</b>
+                    <p>On Success: {"deletes": 0, "lines": 0, "additions": 0, "success": true}</p>
+                    <p>On Failure: {"success": false, "error": "username not found"}</p>
+                </div>
+                <div class="card-action">
+                        <a href="http://git-social.com/api/v1/ArchiveTeam/ArchiveBot/user/ivan/lines/week">http://git-social.com/api/v1/ArchiveTeam/ArchiveBot/user/ivan/lines/week </a>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-content">
+                    <span class="card-title">Commits This Week by a User</span>
+                    <p><b>URL:</b> git-social.com/api/v1/[owner]/[repo]/user/[username]/commits/week/</p>
+                    <p><b>Response:</b>
+                    <p>On Success: {"commits": 0, "success": true}</p>
+                    <p>On Failure: {"success": false, "error": "username not found"}</p>
+                </div>
+                <div class="card-action">
+                        <a href="http://git-social.com/api/v1/ArchiveTeam/ArchiveBot/user/ivan/commits/week">http://git-social.com/api/v1/ArchiveTeam/ArchiveBot/user/ivan/commits/week </a>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-content">
+                    <span class="card-title">This Week Sticker Image For a User</span>
+                    <p><b>URL:</b> git-social.com/api/v1/[owner]/[repo]/user/[username]/sticker/week/</p>
+                    <p><b>Response: </b> Image as base64 encded plaintext</p>
+                </div>
+                <div class="card-action">
+                        <a href="http://git-social.com/api/v1/ArchiveTeam/ArchiveBot/user/ivan/sticker/week">http://git-social.com/api/v1/ArchiveTeam/ArchiveBot/user/ivan/sticker/week </a>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-content">
+                    <span class="card-title">Leaderboard Based on Commits this Week</span>
+                    <p><b>URL:</b> git-social.com/api/v1/[owner]/[repo]/leaderboard/commits/week/</p>
+                    <p><b>Response (Sorted by Commits):</b></p>
+                    <p>{"contributors": [{"commits": 12, "name": "David Yip", "username": "yipdw"}, {"commits": 0, "name": "Matt Iggo", "username": "MattIggo"}, {"commits": 0, "name": "C4K3", "username": "C4K3"}], "success": true}</p>
+                </div>
+                <div class="card-action">
+                        <a href="http://git-social.com/api/v1/ArchiveTeam/ArchiveBot/leaderboard/commits/week">http://git-social.com/api/v1/ArchiveTeam/ArchiveBot/leaderboard/commits/week </a>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-content">
+                    <span class="card-title">Badge Images</span>
+                    <p><b>URL:</b> git-social.com/api/v1/badge/[2 digit number]</p>
+                    <p><b>Response: </b> Image as base64 encded plaintext</p>
+                    <p><b>Note:</b></p>
+                    <p>Badge 01 - 03 are for commits</p>
+                    <p>Badge 04 - 06 are for lines</p>
+                </div>
+                <div class="card-action">
+                        <a href="http://git-social.com/api/v1/badge/02">http://git-social.com/api/v1/badge/02</a>
+                </div>
+            </div>
+            
+        </div> 
+        <div class="col s2"></div>
+    </div>
+{% endblock %}

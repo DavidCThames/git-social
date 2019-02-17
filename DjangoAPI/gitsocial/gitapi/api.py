@@ -13,7 +13,7 @@ from repos.models import Repos
 g = Github('ebd026d4736c985826055cc7b1d8a5db1c6f26b3')
 
 
-def get_user_check(user):
+def get_user_check(request,user):
     try:
         u = User.objects.get(username__iexact=user)
         return JsonResponse({'success':True}, safe=False)
@@ -70,7 +70,7 @@ def get_contributors_from_list(contributors, username):
 def repo_to_url(repo):
     return repo.owner+'/'+repo.repo_name
 
-def get_user_repo(user):
+def get_user_repo(request,user):
     json = {'repos':[]}
     u = User.objects.get(username__iexact=user)
     repos = u.repos_set.all()

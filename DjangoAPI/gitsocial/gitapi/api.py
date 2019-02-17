@@ -18,30 +18,47 @@ def get_contributors_from_list(contributors, username):
 
     
 
-def contributor_to_dict(contributor):
+def contributor_to_dict(contributor, dt):
     d = {}
     d['username'] = contributor.author.login
     d['name'] = contributor.author.name
     d['total'] = contributor.total
-    last_week = contributor.weeks[-2]
-
-
-
-    d['last_week'] = { # TODO: Might be first week...
+    if dt == 'week':
+        last_week = contributor.weeks[-2]
+        d['last_week'] = { 
         'time' : last_week.w,
         'additions': last_week.a,
         'deletes' : last_week.d,
         'commits' : last_week.c,
         }
+            
+    if dt == 'month':
+        month = [0,0,0,0]
+        month[0] = contributor.weeks[-2].w
+        for i in range(-2,-6,-1):
+            cur = contributor.weeks[i]
+            month[1] += cur.a
+            month[2] += cur.d
+            month[3] += cur.c
+            d['last_week'] = { 
+                'time' : month[0],
+                'additions': month[1],
+                'deletes' : month[2],
+                'commits' : month[3]
+            }
+        
+
+
+    
     return d
 
-def get_lines_week(request, owner, repo, username):
+def get_lines(request, owner, repo, username, dt):
     repo = g.get_repo(owner + '/' + repo)
     stats = repo.get_stats_contributors()
     json = {'success' : True}
     contributor, fail = get_contributors_from_list(stats, username)
     if not fail:
-            data = contributor_to_dict(contributor)
+            data = contributor_to_dict(contributor,dt)
             json['lines'] = data['last_week']['additions'] + data['last_week']['deletes']
             json['additions'] = data['last_week']['additions']
             json['deletes'] = data['last_week']['deletes']
@@ -52,13 +69,13 @@ def get_lines_week(request, owner, repo, username):
 
     return JsonResponse(json, safe=False)
 
-def get_commits_week(request, owner, repo, username):
+def get_commits(request, owner, repo, username, dt):
     repo = g.get_repo(owner + '/' + repo)
     stats = repo.get_stats_contributors()
     json = {'success' : True}
     contributor, fail = get_contributors_from_list(stats, username)
     if not fail:
-            json['commits'] = contributor_to_dict(contributor)['last_week']['commits']
+            json['commits'] = contributor_to_dict(contributor,dt)['last_week']['commits']
     else:
         json['success'] = False
         json['error']  = 'username not found'
@@ -66,12 +83,12 @@ def get_commits_week(request, owner, repo, username):
 
     return JsonResponse(json, safe=False)
 
-def get_leaderboard_commits_week(request, owner, repo):
+def get_leaderboard_commits(request, owner, repo, dt):
     repo = g.get_repo(owner + '/' + repo)
     stats = repo.get_stats_contributors()
     json = {'success': True, 'contributors': []}
     for i, contributor in enumerate(stats): #Convert author objects to the username
-        contributor_dict = contributor_to_dict(contributor)
+        contributor_dict = contributor_to_dict(contributor,dt)
         contributor_json = {}
         contributor_json['username'] = contributor_dict['username']
         contributor_json['name'] = contributor_dict['name']
@@ -90,13 +107,13 @@ def get_image(request):
     return HttpResponse(img_str, content_type="text/plain")
 
 
-def get_sticker_week(request, owner, repo, username):
+def get_sticker(request, owner, repo, username, dt):
     #Get lines
     github_repo = g.get_repo(owner + '/' + repo)
     stats = github_repo.get_stats_contributors()
     contributor, fail = get_contributors_from_list(stats, username)
     if not fail:
-            data = contributor_to_dict(contributor)
+            data = contributor_to_dict(contributor,dt)
 
             #Load the image
             img = Image.open("./gitapi/static/img/Sticker_Week.png")
@@ -138,14 +155,14 @@ def get_sticker_badge(request, id):
     img_str = base64.b64encode(buffered.getvalue())
     return HttpResponse(img_str, content_type="text/plain")
 
-def get_badge_list(request, owner, repo, username):
+def get_badge_list(request, owner, repo, username, dt):
     repo = g.get_repo(owner + '/' + repo)
     stats = repo.get_stats_contributors()
     json = {'success' : True}
     contributor, fail = get_contributors_from_list(stats, username)
     if not fail:
         json['badges'] = []
-        data = contributor_to_dict(contributor)
+        data = contributor_to_dict(contributor,dt)
         commits = data['last_week']['commits']
         lines = data['last_week']['additions'] + data['last_week']['deletes']
         print(lines)

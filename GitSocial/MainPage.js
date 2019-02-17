@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
-import {StyleSheet, Text, View, Button} from 'react-native';
+import {StyleSheet, Text, View, Button, Picker} from 'react-native';
+import { Surface } from 'react-native-paper';
 import SnapkitModule from "./SnapkitModule.js";
 
 export default class MainPage extends Component {
@@ -16,6 +17,8 @@ export default class MainPage extends Component {
         numCommits: "",
         numAdditions: "",
         base64Image: "",
+        pickRepo: [],
+        repoWheel: ""
       };
 
       this.sendSticker = this.sendSticker.bind(this);
@@ -28,7 +31,9 @@ export default class MainPage extends Component {
         SnapkitModule.sendImage(this.state.base64Image);
     }
 
-    async pullData() {
+
+
+   async pullData() {
         let requestString = this.state.owner + "/" + this.state.repo + "/user/" + 
                             this.state.user + "/sticker/" + this.state.sort;
         try {
@@ -47,11 +52,41 @@ export default class MainPage extends Component {
   
     render() {
         return (
+            
             <View style={styles.app_container}>
+
+                <Surface style={{backgroundColor: '#000000', width: 600, height: 77, position: 'absolute', opacity: .1}}>
+                
+                </Surface>
+
+                <Surface style={styles.surfaceBanner}>
+                    
+                  <Picker
+                    prompt="Choose a Repository"
+
+                    selectedValue={this.state.repoWheel}
+                    style={{height: 75, width: 200, color: '#ffffff'}}
+                    itemStyle={{color: '#ffffff', fontSize: 40, fontFamily: 'roboto'}}
+                    onValueChange={(itemValue, itemIndex) =>
+                    this.setState({repoWheel: itemValue})
+                      }>
+                        
+                        <Picker.Item label="Repo1" value="f1" />
+                        <Picker.Item label="Repo2: Electric Repoloo" value="f2" />
+                        <Picker.Item label="Repo3: Before the Repo" value="f3" />
+                        <Picker.Item label="Repo4: The Reponing" value="f4" />
+                  </Picker>
+                    
+                </Surface>
+
+                
+                <View style={{height: 150}}></View>
+                <Surface style={styles.surface}>
                 <View style={styles.text_container}> 
                 <Text style={styles.commit_text}> Number of commits: {this.state.numCommits} </Text> 
                 <Text style={styles.commit_text}> Number of additions: {this.state.numAdditions} </Text> 
                 </View>
+                </Surface>
                 <View>
                 <Button
                     disabled={this.state.base64Image === ""}
@@ -68,9 +103,29 @@ export default class MainPage extends Component {
 const styles = StyleSheet.create({
     app_container: {
       flex: 1,
-      justifyContent: 'center',
+      //justifyContent: 'center',
       alignItems: 'center',
       backgroundColor: '#F5FCFF',
+    },
+    surfaceBanner: {
+      padding: 20,
+      height: 75,
+      width: 600,
+      top: 0,
+      backgroundColor: '#6200EE',
+      alignItems: 'center',
+      justifyContent: 'center',
+      elevation: 4
+    },
+    surface: {
+      padding: 20,
+      height: 150,
+      width: 300,
+      top: 0,
+      backgroundColor: '#FFFFFF',
+      alignItems: 'center',
+      justifyContent: 'center',
+      elevation: 4
     },
     commit_text: {
       fontSize: 20,

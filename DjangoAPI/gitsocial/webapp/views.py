@@ -52,7 +52,7 @@ def user_info(request, owner, repo, username, time):
 
 
 
-    data_commits = json_response['selected']['total']
+    data_commits = json_response['selected']['last_week']['commits']
 
 
     badge_ids = json_response['badge_ids']

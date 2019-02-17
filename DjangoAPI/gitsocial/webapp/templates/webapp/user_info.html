@@ -82,16 +82,22 @@
                     <span class="card-title">Leaderboard</span>
 
                     <table style="margin-left: 30px"><tr>
+                        <th>Rank</th>			
                         <th>User</th>
                         <th>Commits</th>
                     </tr></table>
                     <ol>
-                        {% for contrib in data_leaderboard %}
-                            <li><table><tr>
-                                <td>{{contrib.username}}</td>
-                                <td>{{contrib.commits}}</td>
-                            </tr></table></li>
-                        {% endfor %}
+			<table class="highlight">
+                            {% for contrib in data_leaderboard %}
+		
+				    <tr {%if contrib.username == request.user.username%}style="background:#F8ECC2"{% endif %}>
+				    <td>{{ forloop.counter }}</td>
+                                    <td>{{contrib.username}}</td>
+                                    <td>{{contrib.commits}}</td>
+				</tr>
+		
+                            {% endfor %}
+			</table>
                     </ol>
                 </div>
             </div>

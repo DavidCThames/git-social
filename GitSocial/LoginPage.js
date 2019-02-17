@@ -33,6 +33,10 @@ export default class LoginPage extends Component {
                 {/*<Title style={{fontSize: 40, backgroundColor: '#6200EE', padding: 25, color: '#ffffff'}}>
                     Git Social
                 </Title>*/}
+                <Surface style={{backgroundColor: '#000000', width: 600, height: 152, position: 'absolute', opacity: .1}}>
+                    
+                </Surface>
+
                 <Surface style={styles.surface}>
                     <Text style={{fontFamily: 'roboto', fontSize: 60, padding: 10, color: '#ffffff'}}>
                         Git Social

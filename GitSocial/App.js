@@ -7,8 +7,10 @@
  * @lint-ignore-every XPLATJSCOPYRIGHT1
  */
 
+import * as React from 'react';
 import LoginPage from "./LoginPage";
 import MainPage from "./MainPage";
+import { Provider as PaperProvider } from 'react-native-paper';
 import {createStackNavigator, createAppContainer} from 'react-navigation';
 
 const MainNavigator = createStackNavigator({
@@ -18,4 +20,10 @@ const MainNavigator = createStackNavigator({
 
 const App = createAppContainer(MainNavigator);
 
-export default App;
+export default function Main() {
+  return (
+    <PaperProvider>
+      <App />
+    </PaperProvider>
+  );
+}

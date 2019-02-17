@@ -6,6 +6,7 @@
 	<!--Import Google Icon Font-->
 	<link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
 
+
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 	<!--Import materialize.css-->
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
@@ -17,6 +18,17 @@
     </head>
     
     <body>
+	{% if request.user.is_authenticated %}
+
+	    <ul id="dropdown1" class="dropdown-content">
+		<li><a href="#!"></a></li>
+		{% for repo in user.repos_set.all %}
+		    <li><a href="{% url 'webapp:user_info' repo.owner repo.repo_name request.user.username %}">{{repo.owner}}/{{repo.repo_name}} </a></li>
+		    <li class="divider"></li>
+		{% endfor %}
+		<li><a href="{% url 'repos:add' %}">Add another repo... </a></li>
+	    </ul>
+	{% endif %}
 	  <nav>
 	      <div class="nav-wrapper" style="background-color:#6200EE">
 		  <a href="{% url 'site:index'%}" style="padding-left:10px" class="brand-logo ">Git Social</a>
@@ -26,9 +38,7 @@
 		      <li><a href="#">Download App</a></li>
 		      <li><a href="{% url 'site:apidocs' %}">API Documentation</a></li>
 		      {% if request.user.is_authenticated %}
-			  <li>
-			      <a ='padding-right:10px'>Hello, {{request.user.username}}</a>
-			  </li>
+			  <li><a style='padding-right:10px' class="dropdown-trigger" href="#!" data-target="dropdown1">Hello, {{request.user.username}}. &nbsp;&nbsp; Checkout your repos!<i class="material-icons right">arrow_drop_down</i></a></li>
 			  <li>
 			      <a href="{% url 'users:logout'%}">[Logout]</a>
 			  </li>
@@ -56,5 +66,9 @@
 	{% endblock %}
 
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+	<script type="text/javascript">
+	    $(".dropdown-trigger").dropdown();
+	</script>
     </body>
 </html>

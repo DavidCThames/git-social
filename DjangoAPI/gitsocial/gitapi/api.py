@@ -1,10 +1,13 @@
+
 from django.http import JsonResponse, HttpResponse
 from github import Github
 from PIL import Image
 import base64
 from io import BytesIO
 from PIL import ImageFont
-from PIL import ImageDraw 
+from PIL import ImageDraw
+
+
 g = Github('ebd026d4736c985826055cc7b1d8a5db1c6f26b3')
 
 def get_contributors_from_list(contributors, username):
@@ -20,9 +23,12 @@ def contributor_to_dict(contributor):
     d['username'] = contributor.author.login
     d['name'] = contributor.author.name
     d['total'] = contributor.total
-    last_week = contributor.weeks[len(contributor.weeks)-1]
+    last_week = contributor.weeks[-1]
+
+
+
     d['last_week'] = { # TODO: Might be first week...
-        
+        'time' : last_week.w,
         'additions': last_week.a,
         'deletes' : last_week.d,
         'commits' : last_week.c,
@@ -111,6 +117,7 @@ def get_sticker_week(request, owner, repo, username):
             json['commits'] = data['last_week']['commits']
             json['deletes'] = data['last_week']['deletes']
             json['additions'] = data['last_week']['additions']
+            json['time'] = data['last_week']['time']                                            
             json['success'] = True
            
     else:

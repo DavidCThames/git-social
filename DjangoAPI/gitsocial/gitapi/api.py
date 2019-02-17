@@ -12,6 +12,55 @@ from repos.models import Repos
 
 g = Github('ebd026d4736c985826055cc7b1d8a5db1c6f26b3')
 
+
+def get_user_check(user):
+    try:
+        u = User.objects.get(username__iexact=user)
+        return JsonResponse({'success':True}, safe=False)
+    except:
+        return JsonResponse({'success':False}, safe=False)
+    
+def repo_user_to_json(owner, name, dt, user):
+    github_repo = g.get_repo(owner + '/'+name)
+    json={'contributors' : []}
+    stats = github_repo.get_stats_contributors()
+    selected = False
+    for i, contributor in enumerate(stats): #Convert author objects to the username
+        contributor_dict = contributor_to_dict(contributor,dt)
+        if contributor_dict['username'] == user:
+            selected = contributor_dict
+        contributor_json = {}
+        contributor_json['username'] = contributor_dict['username']
+        contributor_json['name'] = contributor_dict['name']
+        contributor_json['commits'] = contributor_dict['last_week']['commits']
+        json['contributors'].append(contributor_json)
+
+    json['contributors'].sort(key=lambda x: x['commits'], reverse=True)
+    json['commits'] = contributor_to_dict(contributor,dt)['last_week']['commits']
+
+    if selected != False:        
+        json.update(sticker(selected,owner,name))
+        json.update({'selected':selected})
+        badges = contrib_to_badge_list(selected)
+        json['badge_ids'] = badges
+        json['badge_imgs'] = []
+        for badge in badges:
+            json['badge_imgs'].append(str(get_badge_str(badge)))
+    return json
+    
+    
+def get_all(request, owner, repo, dt, user):
+    json = {'repos':{}}
+    u = User.objects.get(username__iexact=user)
+    repos = u.repos_set.all()
+    l_repos= list(map(repo_to_url,repos))
+    json['repo_names'] = l_repos
+    for repo in repos:
+        json['repos'][repo_to_url(repo)] =repo_user_to_json( repo.owner, repo.repo_name, dt, user)
+
+    return JsonResponse(json, safe=False)
+    
+    
 def get_contributors_from_list(contributors, username):
     for contributor in contributors:
         if contributor.author.login == username:
@@ -21,7 +70,7 @@ def get_contributors_from_list(contributors, username):
 def repo_to_url(repo):
     return repo.owner+'/'+repo.repo_name
 
-def get_user_repo(contributor,user):
+def get_user_repo(user):
     json = {'repos':[]}
     u = User.objects.get(username__iexact=user)
     repos = u.repos_set.all()
@@ -63,6 +112,12 @@ def contributor_to_dict(contributor, dt):
     
     return d
 
+def lines(data):
+    json = {}
+    json['lines'] = data['last_week']['additions'] + data['last_week']['deletes']
+    json['additions'] = data['last_week']['additions']
+    json['deletes'] = data['last_week']['deletes']
+    return json
 
 def get_lines(request, owner, repo, username, dt): # Documented
 
@@ -72,9 +127,7 @@ def get_lines(request, owner, repo, username, dt): # Documented
     contributor, fail = get_contributors_from_list(stats, username)
     if not fail:
             data = contributor_to_dict(contributor,dt)
-            json['lines'] = data['last_week']['additions'] + data['last_week']['deletes']
-            json['additions'] = data['last_week']['additions']
-            json['deletes'] = data['last_week']['deletes']
+            json.append(lines(data))
     else:
         json['success'] = False
         json['error']  = 'username not found'
@@ -115,6 +168,31 @@ def get_leaderboard_commits(request, owner, repo, dt): # Documented
 
     return JsonResponse(json, safe=False)
 
+def sticker(data, owner, repo):
+    #Load the image
+    img = Image.open("./gitapi/static/img/Sticker_Week.png")
+    
+    #Add text to the image
+    draw = ImageDraw.Draw(img)
+    font = ImageFont.truetype("./gitapi/static/font/Roboto-Regular.ttf", 24)
+    font_secondary = ImageFont.truetype("./gitapi/static/font/Roboto-Regular.ttf", 12)
+    draw.text((80, 85),str(data['last_week']['additions'] + data['last_week']['deletes']),(0,0,0),font=font)
+    draw.text((80, 155),str(data['last_week']['commits']),(0,0,0),font=font)
+    draw.text((30, 265),str(owner + '/' + repo),(95,99,104),font=font_secondary)
+
+    #Convert to base64
+    buffered = BytesIO()
+    img.save(buffered, format="PNG")
+    img_str = str(base64.b64encode(buffered.getvalue()))
+    json = {'image' : img_str}
+    json['commits'] = data['last_week']['commits']
+    json['deletes'] = data['last_week']['deletes']
+    json['additions'] = data['last_week']['additions']
+    json['time'] = data['last_week']['time']                                            
+    json['success'] = True
+
+    return json
+    
 def get_sticker(request, owner, repo, username, dt): # Documented
 
     #Get lines
@@ -122,29 +200,8 @@ def get_sticker(request, owner, repo, username, dt): # Documented
     stats = github_repo.get_stats_contributors()
     contributor, fail = get_contributors_from_list(stats, username)
     if not fail:
-            data = contributor_to_dict(contributor,dt)
-
-            #Load the image
-            img = Image.open("./gitapi/static/img/Sticker_Week.png")
-
-            #Add text to the image
-            draw = ImageDraw.Draw(img)
-            font = ImageFont.truetype("./gitapi/static/font/Roboto-Regular.ttf", 24)
-            font_secondary = ImageFont.truetype("./gitapi/static/font/Roboto-Regular.ttf", 12)
-            draw.text((80, 85),str(data['last_week']['additions'] + data['last_week']['deletes']),(0,0,0),font=font)
-            draw.text((80, 155),str(data['last_week']['commits']),(0,0,0),font=font)
-            draw.text((30, 265),str(owner + '/' + repo),(95,99,104),font=font_secondary)
-
-            #Convert to base64
-            buffered = BytesIO()
-            img.save(buffered, format="PNG")
-            img_str = str(base64.b64encode(buffered.getvalue()))
-            json = {'image' : img_str}
-            json['commits'] = data['last_week']['commits']
-            json['deletes'] = data['last_week']['deletes']
-            json['additions'] = data['last_week']['additions']
-            json['time'] = data['last_week']['time']                                            
-            json['success'] = True
+        data = contributor_to_dict(contributor,dt)
+        json = sticker(data, owner, repo)
            
     else:
         json['success'] = False
@@ -154,19 +211,39 @@ def get_sticker(request, owner, repo, username, dt): # Documented
     return JsonResponse(json, safe=False)
 
 
-
-def get_sticker_badge(request, id): # Documented
-
+def get_badge_str(id):
     #Load the image
-    img = Image.open("./gitapi/static/img/Badges-" + id + ".png")
+    img = Image.open("./gitapi/static/img/Badges-0" + str(id) + ".png")
     
     #Convert to base64
     buffered = BytesIO()
     img.save(buffered, format="PNG")
-    img_str = base64.b64encode(buffered.getvalue())
-    return HttpResponse(img_str, content_type="text/plain")
+    return base64.b64encode(buffered.getvalue())
 
 
+
+def get_sticker_badge(request, id): # Documented
+    
+
+    return HttpResponse(get_badge_str(id), content_type="text/plain")
+
+def contrib_to_badge_list(data):
+    commits = data['last_week']['commits']
+    lines = data['last_week']['additions'] + data['last_week']['deletes']
+    badges = []
+    if commits > 10:
+        badges.append(1)
+        if commits > 50:
+            badges.append(2)
+        if commits > 100:
+            badges.append(3)
+        if lines > 100:
+            badges.append(4)
+        if lines > 500:
+            badges.append(5)
+        if lines > 1000:
+            badges.append(6)
+    return badges
 def get_badge_list(request, owner, repo, username, dt): # Documented
 
     repo = g.get_repo(owner + '/' + repo)
@@ -174,24 +251,10 @@ def get_badge_list(request, owner, repo, username, dt): # Documented
     json = {'success' : True}
     contributor, fail = get_contributors_from_list(stats, username)
     if not fail:
-        json['badges'] = []
         data = contributor_to_dict(contributor,dt)
-        commits = data['last_week']['commits']
-        lines = data['last_week']['additions'] + data['last_week']['deletes']
-        print(lines)
+            
+        json['badges'] = contrib_to_badge_list(data)
 
-        if commits > 10:
-            json['badges'].append(1)
-        if commits > 50:
-            json['badges'].append(2)
-        if commits > 100:
-            json['badges'].append(3)
-        if lines > 100:
-            json['badges'].append(4)
-        if lines > 500:
-            json['badges'].append(5)
-        if lines > 1000:
-            json['badges'].append(6)
     else:
         json['success'] = False
 

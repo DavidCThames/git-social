@@ -32,7 +32,7 @@ def search(request):
 
 def user_info(request, owner, repo, username, time):
     try:
-        g.get_repos(owner + '/' +repo)
+        g.get_repo(owner + '/' +repo)
     except:
         messages.error(request, 'Repo not found!! Please modify your search and try again')
         return render(request, 'webapp/home.html')

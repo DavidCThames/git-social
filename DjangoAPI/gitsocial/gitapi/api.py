@@ -106,8 +106,13 @@ def get_sticker_week(request, owner, repo, username):
             #Convert to base64
             buffered = BytesIO()
             img.save(buffered, format="PNG")
-            img_str = base64.b64encode(buffered.getvalue())
-            return HttpResponse(img_str, content_type="text/plain")
+            img_str = str(base64.b64encode(buffered.getvalue()))
+            json = {'image' : img_str}
+            json['commits'] = data['last_week']['commits']
+            json['deletes'] = data['last_week']['deletes']
+            json['additions'] = data['last_week']['additions']
+            json['success'] = True
+           
     else:
         json['success'] = False
         json['error']  = 'username not found'

@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {StyleSheet, Text, View, Button, Picker} from 'react-native';
 import { Surface } from 'react-native-paper';
 import SnapkitModule from "./SnapkitModule.js";
+import Leaderboard from './Leaderboard.js';
 
 export default class MainPage extends Component {
     static navigationOptions = {
@@ -18,13 +19,16 @@ export default class MainPage extends Component {
         numAdditions: "",
         base64Image: "",
         pickRepo: [],
-        repoWheel: ""
+        repoWheel: "",
+        leaderboardArr: []
       };
 
       this.sendSticker = this.sendSticker.bind(this);
       this.pullData = this.pullData.bind(this);
+      this.pullBoard = this.pullBoard.bind(this);
 
       this.pullData();
+      this.pullBoard();
     }
   
     sendSticker() {
@@ -49,6 +53,20 @@ export default class MainPage extends Component {
             console.error(error);
         }
     }
+
+    async pullBoard() {
+        try {
+            let response = await fetch("http://git-social.com/api/v1/UVA-CS3240-S19/project-103-justintime/leaderboard/commits/week");
+            let responseJson = await response.json();
+            console.log(responseJson)
+            this.setState({
+                leaderboardArr: responseJson.contributors
+            });
+        }
+        catch(error) {
+            console.error(error);
+        }
+    }
   
     render() {
         return (
@@ -63,7 +81,6 @@ export default class MainPage extends Component {
                     
                   <Picker
                     prompt="Choose a Repository"
-
                     selectedValue={this.state.repoWheel}
                     style={{height: 75, width: 200, color: '#ffffff'}}
                     itemStyle={{color: '#ffffff', fontSize: 40, fontFamily: 'roboto'}}

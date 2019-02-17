@@ -21,6 +21,7 @@ from django.conf.urls import include, url
 urlpatterns = [
     path('repo/', include('repos.urls')),
     url(r'^admin/', admin.site.urls),
+    url(r'^app/', include('webapp.urls')),
     url(r'^api/', include('gitapi.urls')),
     url('', include('users.urls')),
     url('', include('sitemain.urls')),    

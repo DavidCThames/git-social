@@ -3,10 +3,11 @@ from django import forms
 from django.utils.translation import  gettext_lazy as _
 
 from .models import User
+from github import Github
 
 
 UserModel = User
-
+g = Github('ebd026d4736c985826055cc7b1d8a5db1c6f26b3')
 class UsernameField(forms.CharField):
     def to_python(self, value):
         return unicodedata.normalize('NFKC', super().to_python(value))
@@ -18,17 +19,28 @@ class CustomUserCreationForm(UserCreationForm):
         model = User
         fields = ('username' , 'email')
         
-    def clean_username(self):
+    def clean_username(self):        
         username = self.cleaned_data['username']
         user_model = User
+        error_msg = "This username already exists. haha"
+#        raise forms.ValidationError(_("hahe"))
+        try: 
+            print(g.get_user(username).name)
+        except:
+            error_msg = "No github account found."
+            raise forms.ValidationError(_(error_msg))
         try:
             user_model.objects.get(username__iexact=username)
         except user_model.DoesNotExist:
+
             return username
-        raise forms.ValidationError(_("This username already exists."))
+        raise forms.ValidationError(_(error_msg))
+    
+    
     
     def save(self, commit=True):
         form = super(CustomUserCreationForm,self)
+        self.clean()
         user = form.save(commit=False)
         self.is_valid()
             

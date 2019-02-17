@@ -1,4 +1,5 @@
 {% load static %}
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -18,9 +19,22 @@
 	      <div class="nav-wrapper" style="background-color:#6200EE">
 		  <a href="{% url 'site:index'%}" style="padding-left:10px" class="brand-logo ">Git Social</a>
 		  <ul id="nav-mobile" class="right hide-on-med-and-down">
-		      <li><a href="sass.html">Sass</a></li>
-		      <li><a href="badges.html">Components</a></li>
-		      <li><a href="collapsible.html">JavaScript</a></li>
+			  <li><a href="{% url 'site:index' %}">Home</a></li>
+			  <li><a href="#">Web App</a></li>
+		      <li><a href="#">Download App</a></li>
+		      <li><a href="{% url 'site:apidocs' %}">API Documentation</a></li>
+		      {% if request.user.is_authenticated %}
+			  <li>
+			      <a ='padding-right:10px'>Hello, {{request.user.username}}</a>
+			  </li>
+			  <li>
+			      <a href="{% url 'users:logout'%}">[Logout]</a>
+			  </li>
+		      {% else %}
+			  <li><a href="{% url 'users:login' %}">Login/Register</a></li>
+		      {% endif %}
+	      
+
 		  </ul>
 	      </div>
 	  </nav>

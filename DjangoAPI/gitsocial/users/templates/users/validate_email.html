@@ -1,0 +1,7 @@
+{% autoescape off %}
+    Hi {{ user.first_name }},
+    Thank you for registering for git-social!
+    
+    Please click on the link to confirm your email,
+    http://{{ domain }}{% url 'users:activate' uidb64=uid token=token %}
+{% endautoescape %}

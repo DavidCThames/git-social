@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% load static %}
+
+
+{% block content %}
+    <div class="row">
+        <div class="col s2"></div>
+        <form class="col s8">
+            <div class="card">
+                <div class="card-content">
+                    <span class="card-title">Search</span>
+
+                    <form method="POST"></form>
+                        <div class="row">
+                            <div class="input-field col s4">
+                                <input name="repo-owner" placeholder="torvalds" type="text" id="repo-owner" class="validate">
+                                <label for="search">Repo Owner</label>
+                            </div>
+                            <div class="input-field col s4">
+                                <input name="repo-name" placeholder="linux" type="text" id="repo-name" class="validate">
+                                <label for="search">Repo Name</label>
+                            </div>
+                            <div class="input-field col s4">
+                                <input name="username" placeholder="torvalds" type="text" id="search" class="validate">
+                                <label for="search">User</label>
+                            </div>
+                            <div class="col s1"></div>
+                        </div>
+                        <div class="row">
+                            <div class="col s12">
+                                <button class="btn waves-effect waves-light deep-purple" type="submit" name="action">Search
+                                    <i class="material-icons right">search</i>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div> 
+        <div class="col s2"></div>
+    </div>
+{% endblock %}

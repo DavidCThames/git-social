@@ -46,7 +46,7 @@ export default class LoginPage extends Component {
                 <View style={{height: 150}}></View>
 
                 <View style={styles.text_container}> 
-                    <Text style={styles.commit_text}>Sign In With GitHub</Text> 
+                    <Text style={styles.commit_text}>Sign In</Text> 
                 </View>
                 
                 <View style={styles.login_container}>

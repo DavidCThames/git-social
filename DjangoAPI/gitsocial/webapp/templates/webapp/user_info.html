@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% load static %}
+
+
+{% block content %}
+    <style>
+        .info {
+            border: solid 2px;
+            border-radius: 5px;
+            border-color: #6200EE;
+        }
+
+        .info input, .info label {
+            color: black !important;
+        }
+
+        .info input {
+            font-size: 30px !important;
+        }
+
+        .info label {
+            background-color:white;
+            padding: 3px;
+        }
+    </style>
+
+    <div class="row">
+        <div class="col s12" style="text-align: center">
+            <h2>{{owner}}/{{repo}}</h2>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col s2"></div>
+        <form class="col s8">
+            <div class="card">
+                <div class="card-content">
+                    <span class="card-title">{{username}}'s Week</span>
+
+                    <div class="row">
+                        <div class="input-field col s12 info">
+                            <input disabled value="599" id="lines" type="text">
+                            <label for="disabled">Lines Edited</label>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="input-field col s12 info">
+                            <input disabled value="4" id="commits" type="text">
+                            <label for="disabled">Commits</label>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div> 
+        <div class="col s2"></div>
+    </div>
+{% endblock %}

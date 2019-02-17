@@ -1,8 +1,23 @@
 from django.shortcuts import render
+from django.urls import reverse, reverse_lazy
+from django.http import HttpResponseRedirect, HttpResponse
 import requests
 
 # Create your views here.
-def home(request):
+def search(request):
+
+    if request.method=='POST':
+        data = request.POST
+        owner = data['repo-owner']
+        name = data['repo-name']
+        user = data['username']
+        return HttpResponseRedirect(reverse('webapp:user_info',
+                                            kwargs = {
+                                                'owner' : owner,
+                                                'repo' : name,
+                                                'username' : user,
+                                                'time' : 'month'
+                                                }))
     return render(request, 'webapp/home.html')
 
 def user_info(request, owner, repo, username, time):

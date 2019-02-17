@@ -23,7 +23,7 @@
 	    <ul id="dropdown1" class="dropdown-content">
 		<li><a href="#!"></a></li>
 		{% for repo in user.repos_set.all %}
-		    <li><a href="{% url 'webapp:user_info' repo.owner repo.repo_name request.user.username %}">{{repo.owner}}/{{repo.repo_name}} </a></li>
+		    <li><a href="{% url 'webapp:user_info' repo.owner repo.repo_name request.user.username "month" %}">{{repo.owner}}/{{repo.repo_name}} </a></li>
 		    <li class="divider"></li>
 		{% endfor %}
 		<li><a href="{% url 'repos:add' %}">Add another repo... </a></li>

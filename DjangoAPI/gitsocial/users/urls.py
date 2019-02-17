@@ -10,6 +10,7 @@ urlpatterns = [
             views.activate,
             name='activate'
     ),
+    path('logout/', views.my_logout, name ='logout'),
     url('login/',views.my_login, name="login"),
     url('register/',views.register, name="register"),
 

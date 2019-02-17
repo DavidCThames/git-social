@@ -43,15 +43,19 @@ def activate(request, uidb64, token):
         user.is_active = True
         user.save()
         login(request, user)
-        return HttpResponse('Thank you for your email confirmation. Now you can login your account.')
+        messages.success(request,'Thank you for your email confirmation. Now you can login your account.')
+        return  HttpResponseRedirect(reverse('users:login'))
     else:
-        return HttpResponse('Activation link is invalid!')
+        messages.error(request,'Activation link is invalid')
+        return  HttpResponseRedirect(reverse('site:index'))
 
 
 def register(request):
     if request.method == 'POST':
         form = CustomUserCreationForm(request.POST)
+        
         if form.is_valid():
+            form.clean()
             user = form.save(commit=False)
             user.is_active = False
             user.save()
@@ -65,8 +69,9 @@ def register(request):
             })
             to_email = form.cleaned_data.get('email')
             send_mail(mail_subject, message,'hello.git-social@gmail.edu', [to_email])
-            
-            return HttpResponse("waiting for verification")
+
+            messages.info(request, 'Please check your email to verify your account')
+            return HttpResponseRedirect(reverse('site:index'))
         else: # needed for form ValidationErrors
             messages.error(request, 'A field is invalid, fix the errors below')
 #            return HttpResponse('invalid field')
@@ -76,3 +81,6 @@ def register(request):
         return render(request, 'users/register.html', {'form' : form})
 
 
+def my_logout(request):
+    logout(request)
+    return HttpResponseRedirect(reverse('site:index'))

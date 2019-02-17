@@ -67,7 +67,7 @@
                                 <p>Checkout our API to develop your own tools and apps with our platform.</p>
                             </div>
                             <div class="card-action">
-                                <a href="#">Go to Documentation</a>
+                                <a href="/apidocs">Go to Documentation</a>
                             </div>
                         </div>
                     </div>
@@ -79,6 +79,8 @@
         <div class="col s2"></div>
         <div style=" margin-left: auto; margin-right: auto" class="col s8">
                 <h1>About</h1>
+                <h5>Git Social brings social gamification to open source. Share your contributions, earn badges, and raise on the leaderboards.</h5>
+
         </div>
         <div class="col s2"></div>
     </div>
@@ -86,32 +88,37 @@
     <div class="row header-container" id="about-descrip-header">
             <div class="col s2"></div>
             <div class="col s4">
-                <p>Git Social brings social gamification to open source. Share your contributions, earn badges, and raise on the leaderboards.</p>
+                <p>You can create an account, linking your GitHub, and then use both the Web App and Mobile App to view your contributions. You can also search for other user's contributions and be linked to them through social media posts. Our app allows sharing your contributions and earned badges to SnapChat as stickers that can be attached to images.</p>
             </div>
             <div class="col s4">
-                <img src="{% static "img/sticker.png" %}">
+                <img src="{% static 'img/StickerMockup.png' %}" width="200">
             </div>
             <div class="col s2"></div>
     </div>
 
+    <div class="row header-container">
+        <div class="col s12">
+            <h2>Developers</h2>
+        </div>
+    </div>
     <div class="row header-container" id="team-header">
             <div class="col s3">
-                <div style="margin-left:calc(50% - 100px); width:200px; height:200px; background-color: #ececec; background-image:url(img/IMG_2767.jpg); background-size:100%;border-radius:100%; "></div>
+                <div style="margin-left:calc(50% - 100px); width:200px; height:200px; background-color: #ececec; background-image:url('{% static "img/davidthames.jpg" %}'); background-size:100%;border-radius:100%; background-position:center;"></div>
                 <p>David Thames</p>
                 <a href="http://davidcthames.com/">http://davidcthames.com/</a>
             </div>
             <div class="col s3">
-                <div style="margin-left:calc(50% - 100px); width:200px; height:200px; background-color: #ececec; background-image:url(img/IMG_2767.jpg); background-size:100%;border-radius:100%; "></div>
+                <div style="margin-left:calc(50% - 100px); width:200px; height:200px; background-color: #ececec; background-image:url('{% static "img/jack.png" %}'); background-size:100%;border-radius:100%; "></div>
                 <p>Jack Schumann</p>
                 <a href=""></a>
             </div>
             <div class="col s3">
-                <div style="margin-left:calc(50% - 100px); width:200px; height:200px; background-color: #ececec; background-image:url(img/IMG_2767.jpg); background-size:100%;border-radius:100%; "></div>
+                <div style="margin-left:calc(50% - 100px); width:200px; height:200px; background-color: #ececec; background-image:url('{% static "img/hamzamir.jpg" %}'); background-size:100%;border-radius:100%; "></div>
                 <p>Hamza Mir</p>
                 <a href=""></a>
             </div>
             <div class="col s3">
-                <div style="margin-left:calc(50% - 100px); width:200px; height:200px; background-color: #ececec; background-image:url(img/IMG_2767.jpg); background-size:100%;border-radius:100%; "></div>
+                <div style="margin-left:calc(50% - 100px); width:200px; height:200px; background-color: #ececec; background-image:url('{% static "img/samrobles.jpg" %}'); background-size:100%;border-radius:100%; "></div>
                 <p>Sam Robles</p>
                 <a href=""></a>
             </div>

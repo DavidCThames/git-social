@@ -10,9 +10,7 @@ class MyUserChangeForm(UserChangeForm):
 class MyUserAdmin(UserAdmin):
     form = MyUserChangeForm
 
-    fieldsets = UserAdmin.fieldsets + (
-            (None, {'fields': ('repos',)}),
-    )
+
 
 
 admin.site.register(User, MyUserAdmin)

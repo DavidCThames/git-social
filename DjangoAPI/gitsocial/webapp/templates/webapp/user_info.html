@@ -1,0 +1,114 @@
+{% extends "base.html" %}
+{% load static %}
+
+
+{% block content %}
+    <style>
+        .info {
+            border: solid 2px;
+            border-radius: 5px;
+            border-color: #6200EE;
+        }
+
+        .info input, .info label {
+            color: black !important;
+        }
+
+        .info input {
+            font-size: 30px !important;
+        }
+
+        .info label {
+            background-color:white;
+            padding: 3px;
+        }
+
+        .leaderboard td, .leaderboard th {
+            width: 100px;
+        }
+    </style>
+
+    <div class="row">
+        <div class="col s12" style="text-align: center">
+            <h2>{{owner}}/{{repo}}</h2>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col s2"></div>
+        <div class="col s8">
+
+            <div style="height: 75px">
+                <div class="input-field col s12">
+                    <select id="time">
+                        <option {% if time == "week" %}selected{% endif %} value="week">Week</option>
+                        <option {% if time == "month" %}selected{% endif %} value="month">Month</option>
+                    </select>
+                    <label>Time Period</label>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-content" style="overflow: auto;">
+                    <span class="card-title">{{username}}'s Badges</span>
+                    {% for badge in data_badges %}
+                        <img width="100"  style="float:left; margin: 20px;" src="data:image/png;base64, {{badge}}">
+                    {% endfor %}
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-content">
+                    <span class="card-title">{{username}}'s Week</span>
+
+                    <div class="row">
+                        <div class="input-field col s12 info">
+                            <input disabled value="{{data_lines}}" id="lines" type="text">
+                            <label for="disabled">Lines Edited</label>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="input-field col s12 info">
+                            <input disabled value="{{data_commits}}" id="commits" type="text">
+                            <label for="disabled">Commits</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card leaderboard">
+                <div class="card-content">
+                    <span class="card-title">Leaderboard</span>
+
+                    <table style="margin-left: 30px"><tr>
+                        <th>User</th>
+                        <th>Commits</th>
+                    </tr></table>
+                    <ol>
+                        {% for contrib in data_leaderboard %}
+                            <li><table><tr>
+                                <td>{{contrib.username}}</td>
+                                <td>{{contrib.commits}}</td>
+                            </tr></table></li>
+                        {% endfor %}
+                    </ol>
+                </div>
+            </div>
+            
+        </div> 
+        <div class="col s2"></div>
+    </div>
+
+    <script>
+        $(document).ready(function(){
+            $('select').formSelect();
+        });
+
+        $(function() {
+            $("#time").change(function() {
+                window.location = "./" + $("#time").val()
+            })
+        })
+    </script>
+{% endblock %}

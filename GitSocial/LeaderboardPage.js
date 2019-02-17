@@ -14,13 +14,20 @@ export default class LeaderboardPage extends Component {
       super(props);
   
       this.state = {
+          arr: []
       }
     }
+
+    componentDidMount () {
+        this.props.navigation.addListener('willFocus', (route) => { 
+            this.setState({arr: global.leaderboardArr});
+        });
+    } 
     
     render() {
         return (
             <View>
-                <Leaderboard arr={[]}/>
+                <Leaderboard arr={this.state.arr}/>
             </View>
         );
     }

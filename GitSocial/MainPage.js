@@ -4,13 +4,14 @@ import { Surface } from 'react-native-paper';
 import SnapkitModule from "./SnapkitModule.js";
 import Leaderboard from './Leaderboard.js';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import { NavigationActions } from 'react-navigation';
 
 const homeIcon = (<Icon name="code" size={20} color="#f4f4f4" />);
 export default class MainPage extends Component {
 
     static navigationOptions = {
         header: null,
-        tabBarIcon: homeIcon
+        tabBarIcon: homeIcon,
     };
     constructor(props) {
       super(props);
@@ -95,6 +96,10 @@ export default class MainPage extends Component {
             leaderboardArr: repo.contributors,
             badgeArr: badges
         });
+
+        global.leaderboardArr = repo.contributors;
+        global.badges = badges;
+
     }
 
     async populateSingleRepo(repoName) {

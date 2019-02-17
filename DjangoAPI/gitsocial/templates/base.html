@@ -1,4 +1,5 @@
 {% load static %}
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -18,10 +19,10 @@
 	      <div class="nav-wrapper" style="background-color:#6200EE">
 		  <a href="{% url 'site:index'%}" style="padding-left:10px" class="brand-logo ">Git Social</a>
 		  <ul id="nav-mobile" class="right hide-on-med-and-down">
-			  <li><a href="{% urls 'site:index' %}">Home</a></li>
+			  <li><a href="{% url 'site:index' %}">Home</a></li>
 			  <li><a href="#">Web App</a></li>
 		      <li><a href="#">Download App</a></li>
-			  <li><a href="{% urls 'site:apidocs' %}">API Documentation</a></li>
+			  <li><a href="{% url 'site:apidocs' %}">API Documentation</a></li>
 			  <li><a href="#">Login/Register</a></li>
 		  </ul>
 	      </div>

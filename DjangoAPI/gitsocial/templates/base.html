@@ -23,7 +23,7 @@
 	    <ul id="dropdown1" class="dropdown-content">
 		<li><a href="#!"></a></li>
 		{% for repo in user.repos_set.all %}
-		    <li><a href="{% url 'webapp:user_info' repo.owner repo.repo_name request.user.username %}">{{repo.owner}}/{{repo.repo_name}} </a></li>
+		    <li><a href="{% url 'webapp:user_info' repo.owner repo.repo_name request.user.username "month" %}">{{repo.owner}}/{{repo.repo_name}} </a></li>
 		    <li class="divider"></li>
 		{% endfor %}
 		<li><a href="{% url 'repos:add' %}">Add another repo... </a></li>
@@ -34,11 +34,12 @@
 		  <a href="{% url 'site:index'%}" style="padding-left:10px" class="brand-logo ">Git Social</a>
 		  <ul id="nav-mobile" class="right hide-on-med-and-down">
 			  <li><a href="{% url 'site:index' %}">Home</a></li>
-			  <li><a href="#">Web App</a></li>
-		      <li><a href="#">Download App</a></li>
+
+			  <li><a href="#">Download App</a></li>
+			  <li><a href="{% url 'webapp:search' %}">Find Repos</a></li>
 		      <li><a href="{% url 'site:apidocs' %}">API Documentation</a></li>
 		      {% if request.user.is_authenticated %}
-			  <li><a style='padding-right:10px' class="dropdown-trigger" href="#!" data-target="dropdown1">Hello, {{request.user.username}}. &nbsp;&nbsp; Checkout your repos!<i class="material-icons right">arrow_drop_down</i></a></li>
+			  <li><a style='padding-right:10px' class="dropdown-trigger" href="#!" data-target="dropdown1">Hello, {{request.user.username}} - &nbsp;&nbsp; View your repos!<i class="material-icons right">arrow_drop_down</i></a></li>
 			  <li>
 			      <a href="{% url 'users:logout'%}">[Logout]</a>
 			  </li>

@@ -10,6 +10,7 @@
 import * as React from 'react';
 import LoginPage from "./LoginPage";
 import MainPage from "./MainPage";
+import BadgePage from "./BadgePage";
 import { Provider as PaperProvider } from 'react-native-paper';
 import {createStackNavigator, createAppContainer} from 'react-navigation';
 

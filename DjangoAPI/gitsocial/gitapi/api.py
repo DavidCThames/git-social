@@ -116,4 +116,12 @@ def get_sticker_week(request, owner, repo, username):
     return JsonResponse(json, safe=False)
 
 
+def get_sticker_badge(request, id):
+    #Load the image
+    img = Image.open("./gitapi/static/img/Badges-" + id + ".png")
     
+    #Convert to base64
+    buffered = BytesIO()
+    img.save(buffered, format="PNG")
+    img_str = base64.b64encode(buffered.getvalue())
+    return HttpResponse(img_str, content_type="text/plain")

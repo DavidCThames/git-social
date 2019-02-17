@@ -6,7 +6,7 @@ import Leaderboard from './Leaderboard.js';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { NavigationActions } from 'react-navigation';
 
-const homeIcon = (<Icon name="code" size={20} color="#f4f4f4" />);
+const homeIcon = (<Icon name="user-circle" size={20} color="#f4f4f4" />);
 export default class MainPage extends Component {
 
     static navigationOptions = {

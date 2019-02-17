@@ -22,6 +22,10 @@
             background-color:white;
             padding: 3px;
         }
+
+        .leaderboard td, .leaderboard th {
+            width: 100px;
+        }
     </style>
 
     <div class="row">
@@ -32,7 +36,8 @@
 
     <div class="row">
         <div class="col s2"></div>
-        <form class="col s8">
+        <div class="col s8">
+            
             <div class="card">
                 <div class="card-content">
                     <span class="card-title">{{username}}'s Week</span>
@@ -50,9 +55,28 @@
                             <label for="disabled">Commits</label>
                         </div>
                     </div>
-
                 </div>
             </div>
+
+            <div class="card leaderboard">
+                <div class="card-content">
+                    <span class="card-title">Leaderboard</span>
+
+                    <table style="margin-left: 30px"><tr>
+                        <th>User</th>
+                        <th>Commits</th>
+                    </tr></table>
+                    <ol>
+                        {% for contrib in data_leaderboard %}
+                            <li><table><tr>
+                                <td>{{contrib.name}}</td>
+                                <td>{{contrib.commits}}</td>
+                            </tr></table></li>
+                        {% endfor %}
+                    </ol>
+                </div>
+            </div>
+
         </div> 
         <div class="col s2"></div>
     </div>

@@ -20,7 +20,7 @@ def user_info(request, owner, repo, username):
     api_endpoint = 'http://git-social.com/api/v1/'+ owner + '/' + repo + '/leaderboard/commits/week'
     response = requests.get(api_endpoint)
     json_response = response.json()
-    data_leaderboard = json_response['contributors']
+    data_leaderboard = json_response['contributors'][:10]
 
 
     return render(request, 'webapp/user_info.html', {'owner': owner, 'repo': repo, 'username': username, 'data_lines': data_lines, 'data_commits': data_commits, 'data_leaderboard': data_leaderboard})

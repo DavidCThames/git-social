@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-import {StyleSheet, Text, View, Button} from 'react-native';
-import { TextInput } from 'react-native-paper';
+import {StyleSheet, Text, View} from 'react-native';
+import { TextInput, Button } from 'react-native-paper';
 
 export default class LoginPage extends Component {
     static navigationOptions = {
@@ -11,6 +11,7 @@ export default class LoginPage extends Component {
   
       this.state = {
         loggedIn: false,
+        loggingIn: false,
         loginText: "",
         passwordText: "",
         visibleText: ""
@@ -30,12 +31,30 @@ export default class LoginPage extends Component {
             <View style={styles.app_container}>
                 <View style={styles.text_container}> 
                     <Text style={styles.commit_text}> Login Page </Text> 
-                    <Button
-                        onPress={this.login}
-                        title="Login"
-                        color="#841584"
+                </View>
+
+                <View style={styles.login_container}>
+                    <TextInput
+                        mode="outlined"
+                        label="Email"
+                        value={this.state.text}
+                        onChangeText={text => this.setState({ text })}
                     />
                 </View>
+                
+
+                <View style={styles.loginbutton_container}>
+                    <Button 
+                        loading={this.state.loggingIn} 
+                        mode="contained" 
+                        onPress={() => this.setState({loggingIn: true})}
+                        style={{width: 200}}
+                    >
+
+                        Login
+                    </Button>
+                </View>
+
             </View>
         )
     }
@@ -58,4 +77,8 @@ const styles = StyleSheet.create({
       color: '#333333',
       marginBottom: 5,
     },
+    login_container: {
+        width: 200,
+        marginBottom: 10,
+    }
 });

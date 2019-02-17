@@ -34,6 +34,8 @@
         </div>
     </div>
 
+
+
     <div class="row">
         <div class="col s2"></div>
         <div class="col s8">
@@ -44,6 +46,13 @@
                         <option {% if time == "month" %}selected{% endif %} value="month">Month</option>
                     </select>
                     <label>Time Period</label>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-content" style="overflow: auto;">
+                    <span class="card-title">Share This Page</span>
+                    <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-text="My Github contributions to {{owner}}/{{repo}}: " data-show-count="false" data-size="large">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
                 </div>
             </div>
 

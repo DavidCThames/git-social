@@ -22,7 +22,7 @@
         </intent-filter>
       </activity>
       <activity android:name="com.facebook.react.devsupport.DevSettingsActivity" />
-        <meta-data android:name="com.snapchat.kit.sdk.clientId" android:value="e6855308-8bae-4be8-8179-76fbe82187ce" />
+        <meta-data android:name="com.snapchat.kit.sdk.clientId" android:value="2a41add9-e2c5-433d-b22f-347b9bde682c" />
         <provider
             android:authorities="${applicationId}.fileprovider"
             android:name="android.support.v4.content.FileProvider"

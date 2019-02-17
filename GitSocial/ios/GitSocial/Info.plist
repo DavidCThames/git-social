@@ -20,7 +20,7 @@
 	<key>SCSDKRedirectUrl</key>
 	<string>gitsocial://myapp</string>
 	<key>SCSDKClientId</key>
-	<string>e6855308-8bae-4be8-8179-76fbe82187ce</string>
+	<string>2a41add9-e2c5-433d-b22f-347b9bde682c</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleExecutable</key>
@@ -42,7 +42,7 @@
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string></string>
+	<string/>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIRequiredDeviceCapabilities</key>

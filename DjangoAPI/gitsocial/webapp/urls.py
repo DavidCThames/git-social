@@ -5,6 +5,6 @@ from . import views
 app_name = 'webapp'
 urlpatterns = [
     # url(r'^apidocs/?$',views.apidocs, name="apidocs"),
-    url('',views.home, name="index"),
+    url('home',views.home, name="index"),
 
     ]

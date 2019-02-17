@@ -31,34 +31,12 @@ import java.io.IOException;
 
 public class SnapkitModule extends ReactContextBaseJavaModule {
 
-    RequestQueue queue;
-
     public SnapkitModule(ReactApplicationContext reactContext) {
         super(reactContext);
-        queue = Volley.newRequestQueue(getReactApplicationContext());
     }
 
     @ReactMethod
-    public void requestImage(String url) {
-        // Request a string response from the provided URL.
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                sendImage(response);
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                error.printStackTrace();
-            }
-        }
-        );
-
-        // Add the request to the RequestQueue.
-        queue.add(stringRequest);
-    }
-
-    private void sendImage(String response) {
+    public void sendImage(String response) {
         Bitmap decodedImage = decodeBase64(response);
 
         SnapCreativeKitApi snapCreativeKitApi = SnapCreative.getApi(getReactApplicationContext());

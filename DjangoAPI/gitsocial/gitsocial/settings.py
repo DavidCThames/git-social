@@ -32,7 +32,7 @@ ALLOWED_HOSTS = ['*']
 
 
 INSTALLED_APPS = [
-
+    'repos.apps.ReposConfig',
     'widget_tweaks',
     'sitemain.apps.SitemainConfig',
     'users.apps.UsersConfig',

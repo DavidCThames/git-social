@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/1.10/ref/settings/
 """
 
 import os
+from gitsecret import token
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -134,4 +135,4 @@ EMAIL_HOST_PASSWORD = 'caxmczsuwwglfmqr'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 
-GITTOK=  '4fbe20203fb825116c4e384b2ef683c2c7abd593'
+GITTOK=  token

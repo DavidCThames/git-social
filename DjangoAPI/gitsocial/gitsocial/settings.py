@@ -133,3 +133,5 @@ EMAIL_HOST_USER = 'hello.studyskills@gmail.com'
 EMAIL_HOST_PASSWORD = 'caxmczsuwwglfmqr'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
+
+GITTOK=  '4fbe20203fb825116c4e384b2ef683c2c7abd593'

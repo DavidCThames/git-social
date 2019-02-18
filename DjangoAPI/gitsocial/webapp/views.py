@@ -1,3 +1,4 @@
+
 from django.shortcuts import render
 
 from django.contrib import messages
@@ -5,9 +6,9 @@ from django.urls import reverse, reverse_lazy
 from github import Github
 from django.http import HttpResponseRedirect, HttpResponse
 import requests
+from django.conf import settings
 
-
-g = Github('ebd026d4736c985826055cc7b1d8a5db1c6f26b3')
+g = Github(settings.GITTOK)
 # Create your views here.
 def search(request):
 
@@ -42,8 +43,8 @@ def user_info(request, owner, repo, username, time):
     except:
         messages.error(request, 'User is not a contributor to this repo! Please modify your search and try again')
         return render(request, 'webapp/home.html')        
-    
-    api_endpoint = 'http://git-social.com/api/v1/userone/'+ owner + '/' + repo + '/user/' + username + '/' + time + '/'
+
+    api_endpoint = request.scheme+ '://'+request.get_host()+'/api/v1/userone/'+ owner + '/' + repo + '/user/' + username + '/' + time + '/'
 
     response = requests.get(api_endpoint)
     json_response = response.json()

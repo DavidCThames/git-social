@@ -5,9 +5,11 @@ from django.utils.translation import  gettext_lazy as _
 from .models import User
 from github import Github
 
+from django.conf import settings
 
+g = Github(settings.GITTOK)
 UserModel = User
-g = Github('ebd026d4736c985826055cc7b1d8a5db1c6f26b3')
+
 class UsernameField(forms.CharField):
     def to_python(self, value):
         return unicodedata.normalize('NFKC', super().to_python(value))

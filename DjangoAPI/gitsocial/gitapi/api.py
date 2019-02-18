@@ -8,9 +8,8 @@ from PIL import ImageFont
 from PIL import ImageDraw
 from users.models import User
 from repos.models import Repos
-
-
-g = Github('ebd026d4736c985826055cc7b1d8a5db1c6f26b3')
+from django.conf import settings
+g = Github(settings.GITTOK)
 
 
 def get_user_check(request,user):
@@ -132,7 +131,7 @@ def get_lines(request, owner, repo, username, dt): # Documented
     contributor, fail = get_contributors_from_list(stats, username)
     if not fail:
             data = contributor_to_dict(contributor,dt)
-            json.append(lines(data))
+            json.update(lines(data))
     else:
         json['success'] = False
         json['error']  = 'username not found'

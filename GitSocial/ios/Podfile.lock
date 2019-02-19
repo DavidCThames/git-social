@@ -1,0 +1,16 @@
+PODS:
+  - SnapSDK/SCSDKCreativeKit (1.2.0)
+
+DEPENDENCIES:
+  - SnapSDK/SCSDKCreativeKit
+
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - SnapSDK
+
+SPEC CHECKSUMS:
+  SnapSDK: ab99c79e619067da4ed60c98ea5a04a288b83dc0
+
+PODFILE CHECKSUM: 2da1f7acd8eb5de38d174fdafa8ee2ac3073b82d
+
+COCOAPODS: 1.6.0
